@@ -452,7 +452,7 @@ extension ContentView {
     func importAppBundle(_ fileURL: URL) {
         if let application = ALTApplication.init(fileURL: fileURL) {
             if application.encrypted() {
-                
+                setStatus("IPA未脱壳！")
             } else {
                 self.signingOptions.app = application
                 self.signingOptions.appVersion = application.version
@@ -462,7 +462,7 @@ extension ContentView {
                 fileManager.setFilePosixPermissions(application.fileURL)
             }
         } else {
-            setStatus("Invalid File")
+            setStatus("Invalid File！")
         }
     }
     

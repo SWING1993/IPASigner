@@ -217,7 +217,6 @@ ALTDeviceType ALTDeviceTypeFromUIDeviceFamily(NSInteger deviceFamily)
 
 - (BOOL)encrypted {
     bool encrypted = false;
-    NSLog(@"executableFileURL: %@",self.executableFileURL);
     char *macho_path = (char *)[self.executableFileURL.path UTF8String];
     ZMachO macho;
     if (macho.Init(macho_path)) {

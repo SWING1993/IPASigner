@@ -9,7 +9,7 @@
 #import "ZLogManager.h"
 
 static NSString *const NameKey = @"CFBundleName";
-
+static NSString *const ExecutableNameKey = @"CFBundleExecutable";
 
 BOOL folderExists(NSString *folder){
     BOOL isDirectory;
@@ -175,13 +175,15 @@ int patch_binary(NSString *binaryPath, NSString* dylibPath, NSString *lc) {
 
 int patch_ipa(NSString *app_path, NSMutableArray *dylib_paths) {
     
+    
     NSError *error;
     NSFileManager *fileManager = [NSFileManager defaultManager];
     NSDictionary *resultDictionary = [NSDictionary dictionaryWithContentsOfFile:[NSString stringWithFormat:@"%@/Info.plist", app_path]];
     NSString *app_binary = @"";
-            
+    
     if (resultDictionary) {
-        app_binary = [resultDictionary objectForKey:NameKey];
+        app_binary = [resultDictionary objectForKey:ExecutableNameKey];
+        
     } else {
         dispatch_async(dispatch_get_main_queue(), ^{
             NSLog(@"Failed to plist data.");
@@ -189,8 +191,9 @@ int patch_ipa(NSString *app_path, NSMutableArray *dylib_paths) {
         return IPAPATCHER_FAILURE;
     }
     
-    if(DEBUG == DEBUG_ON){
-        NSLog(@"App name: %@", app_binary);
+    if(DEBUG == DEBUG_ON) {
+        NSLog(@"App Name: %@", [resultDictionary objectForKey:NameKey]);
+        NSLog(@"App Executable Name: %@", app_binary);
     }
     
     app_binary = [NSString stringWithFormat:@"%@/%@", app_path, app_binary];
