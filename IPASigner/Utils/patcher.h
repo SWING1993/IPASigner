@@ -49,6 +49,8 @@ NSLog(@"ASSERT(%d:%s)@%s:%u[%s]\nError message: %@", saved_errno, #test, __FILEN
 } \
 while (false)
 
+int change_binary(NSString *binaryPath, NSString *from, NSString*to);
+int remove_binary(NSString *binaryPath, NSString* dylibPath);
 int patch_ipa(NSString *app_path, NSMutableArray *dylib_paths);
 
 char* deb_test(NSString *temp_path, NSString* deb_path);

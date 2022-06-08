@@ -35,6 +35,7 @@ int cp(NSString *file, NSString *to){
     return IPAPATCHER_SUCCESS;
 }
 
+
 int change_binary(NSString *binaryPath, NSString *from, NSString*to) {
     NSData *originalData = [NSData dataWithContentsOfFile:binaryPath];
     NSMutableData *binary = originalData.mutableCopy;
@@ -60,7 +61,7 @@ int change_binary(NSString *binaryPath, NSString *from, NSString*to) {
             }
         } else {
             if(DEBUG == DEBUG_ON){
-                LOG("Failed changed  %s to %s for %s", from.UTF8String, to.UTF8String, CPU(macho.header.cputype));
+                LOG("Failed to changed  %s to %s for %s", from.UTF8String, to.UTF8String, CPU(macho.header.cputype));
             }
             return IPAPATCHER_FAILURE;
         }
@@ -77,8 +78,9 @@ int change_binary(NSString *binaryPath, NSString *from, NSString*to) {
     return IPAPATCHER_SUCCESS;
 }
 
-int patch_binary(NSString *app_binary, NSString* dylib_path){
-    NSData *originalData = [NSData dataWithContentsOfFile:app_binary];
+int remove_binary(NSString *binaryPath, NSString *dylibPath) {
+    LOG("remove_binary %s", dylibPath.UTF8String);
+    NSData *originalData = [NSData dataWithContentsOfFile:binaryPath];
     NSMutableData *binary = originalData.mutableCopy;
     if (!binary)
         return IPAPATCHER_FAILURE;
@@ -95,8 +97,47 @@ int patch_binary(NSString *app_binary, NSString* dylib_path){
     
     for (uint32_t i = 0; i < numHeaders; i++) {
         struct thin_header macho = headers[i];
+        if (removeLoadEntryFromBinary(binary, macho, dylibPath)) {
+            LOG("Successfully removed all entries for %s", dylibPath.UTF8String);
+        } else {
+            LOG("No entries for %s exist to remove", dylibPath.UTF8String);
+            return OPErrorNoEntries;
+        }
+    }
+    if(DEBUG == DEBUG_ON){
+        LOG("Writing executable to %s...", binaryPath.UTF8String);
+    }
+    if (![binary writeToFile:binaryPath atomically:NO]) {
+        if(DEBUG == DEBUG_ON){
+            LOG("Failed to write data. Permissions?");
+        }
+        return IPAPATCHER_FAILURE;
+    }
+    return IPAPATCHER_SUCCESS;
+}
 
-        NSString *lc = @"load";
+int patch_binary(NSString *binaryPath, NSString* dylibPath, NSString *lc) {
+    LOG("patch_binary %s", dylibPath.UTF8String);
+    NSData *originalData = [NSData dataWithContentsOfFile:binaryPath];
+    NSMutableData *binary = originalData.mutableCopy;
+    if (!binary)
+        return IPAPATCHER_FAILURE;
+    struct thin_header headers[4];
+    uint32_t numHeaders = 0;
+    headersFromBinary(headers, binary, &numHeaders);
+
+    if (numHeaders == 0) {
+        if(DEBUG == DEBUG_ON){
+            LOG("No compatible architecture found");
+        }
+        return IPAPATCHER_FAILURE;
+    }
+    
+    for (uint32_t i = 0; i < numHeaders; i++) {
+        
+        struct thin_header macho = headers[i];
+
+        //NSString *lc = @"load";
         uint32_t command = LC_LOAD_DYLIB;
         if (lc)
             command = COMMAND(lc);
@@ -107,9 +148,11 @@ int patch_binary(NSString *app_binary, NSString* dylib_path){
             return IPAPATCHER_FAILURE;
         }
 
-        if (insertLoadEntryIntoBinary(dylib_path, binary, macho, command)) {
+        if (insertLoadEntryIntoBinary(dylibPath, binary, macho, command)) {
             if(DEBUG == DEBUG_ON){
+                printf("Successfully inserted a %s command for %s", LC(command), CPU(macho.header.cputype));
                 LOG("Successfully inserted a %s command for %s", LC(command), CPU(macho.header.cputype));
+                
             }
         } else {
             if(DEBUG == DEBUG_ON){
@@ -119,9 +162,9 @@ int patch_binary(NSString *app_binary, NSString* dylib_path){
         }
     }
     if(DEBUG == DEBUG_ON){
-        LOG("Writing executable to %s...", app_binary.UTF8String);
+        LOG("Writing executable to %s...", binaryPath.UTF8String);
     }
-    if (![binary writeToFile:app_binary atomically:NO]) {
+    if (![binary writeToFile:binaryPath atomically:NO]) {
         if(DEBUG == DEBUG_ON){
             LOG("Failed to write data. Permissions?");
         }
@@ -135,16 +178,13 @@ int patch_ipa(NSString *app_path, NSMutableArray *dylib_paths) {
     NSError *error;
     NSFileManager *fileManager = [NSFileManager defaultManager];
     NSDictionary *resultDictionary = [NSDictionary dictionaryWithContentsOfFile:[NSString stringWithFormat:@"%@/Info.plist", app_path]];
-//    if(DEBUG == DEBUG_ON){
-//        NSLog(@"Loaded .plist file at Documents Directory is: %@", [resultDictionary description]);
-//    }
     NSString *app_binary = @"";
             
     if (resultDictionary) {
         app_binary = [resultDictionary objectForKey:NameKey];
     } else {
         dispatch_async(dispatch_get_main_queue(), ^{
-            [[ZLogManager shareManager] printLogStr:@"Failed to plist data."];
+            NSLog(@"Failed to plist data.");
         });
         return IPAPATCHER_FAILURE;
     }
@@ -158,35 +198,19 @@ int patch_ipa(NSString *app_path, NSMutableArray *dylib_paths) {
         NSLog(@"Full app path: %@", app_binary);
     }
         
+    // Create Dylibs dir
     NSString *DylibFolder = [NSString stringWithFormat:@"%@/Dylibs", app_path];
-    NSString *FrameworkFolder = [NSString stringWithFormat:@"%@/Frameworks", app_path];
-    
-    // Create Dylibs and Frameworks dir
+
     ASSERT([fileManager createDirectoryAtPath:DylibFolder withIntermediateDirectories:true attributes:nil error:&error], @"Failed to create Dylibs directory for our application.", true);
-    ASSERT([fileManager createDirectoryAtPath:FrameworkFolder withIntermediateDirectories:true attributes:nil error:&error], @"Failed to create Frameworks directory for our application.", true);
-    // Move files into their places
-    NSString *subpath1 = [NSString stringWithFormat:@"%@", [[NSBundle mainBundle] pathForResource:@"Cydia.bundle/libsubstitute.0" ofType:@"dylib"]];
-    NSString *subpath2 = [NSString stringWithFormat:@"%@", [[NSBundle mainBundle] pathForResource:@"Cydia.bundle/libsubstitute" ofType:@"dylib"]];
-    NSString *substrate = [NSString stringWithFormat:@"%@", [[NSBundle mainBundle] pathForResource:@"Cydia.bundle/CydiaSubstrate" ofType:@"framework"]];
-    if(DEBUG == DEBUG_ON){
-        printf("START====\n%s\n%s\n%s\n", [subpath1 UTF8String], [subpath2 UTF8String], [substrate UTF8String]);
-    }
-    //TODO: use [manager copyItemAtPath:ipa_path toPath:selected_path error:nil]; I tried it, and it just failed to copy every time.
-    ASSERT(cp(subpath1, DylibFolder), @"Failed to copy over libsubstitute.0", true);
-    ASSERT(cp(subpath2, DylibFolder), @"Failed to copy over libsubstitute", true);
-    ASSERT(cp(substrate, FrameworkFolder), @"Failed to copy over CydiaSubstrate", true);
     
     for(int i=0;i<dylib_paths.count;i++){
-        //TODO: use [manager copyItemAtPath:ipa_path toPath:selected_path error:nil]; I tried it, and it just failed to copy every time.
         NSString *msg = [NSString stringWithFormat:@"Failed to copy %@", dylib_paths[i]];
         ASSERT(cp(dylib_paths[i], DylibFolder), msg, true);
     }
     
-    // Patch the binary to load given frameworks/dylibs
-    ASSERT(patch_binary(app_binary, @"@executable_path/Dylibs/libsubstitute.dylib"), @"Failed to apply the libsubstitute patch!", true);
-    ASSERT(patch_binary(app_binary, @"@executable_path/Dylibs/libsubstitute.0.dylib"), @"Failed to apply the libsubstitute.0 patch!", true);
-    ASSERT(patch_binary(app_binary, @"@executable_path/Frameworks/CydiaSubstrate.framework/CydiaSubstrate"), @"Failed to apply the CydiaSubstrate patch!", true);
-    
+    bool cydiaSubstrate = false;
+    NSString *libsubstrate = @"@executable_path/Dylibs/libsubstrate.dylib";
+
     for(int i=0;i<dylib_paths.count;i++){
         NSArray *dylibNameArray = [dylib_paths[i] componentsSeparatedByString:@"/"];
         if(DEBUG == DEBUG_ON){
@@ -194,27 +218,32 @@ int patch_ipa(NSString *app_path, NSMutableArray *dylib_paths) {
         }
         NSString *dylibName = [NSString stringWithFormat:@"%@",dylibNameArray.lastObject];
         NSString *dylibPath = [NSString stringWithFormat:@"%@/%@", DylibFolder, dylibName];
-
-        ASSERT(change_binary(dylibPath, @"/usr/lib/libsubstrate.dylib", @"@executable_path/Frameworks/CydiaSubstrate.framework/CydiaSubstrate"), @"Failed to changed /usr/lib/libsubstrate.dylib to@executable_path/Frameworks/CydiaSubstrate.framework/CydiaSubstrate", true);
-        ASSERT(change_binary(dylibPath, @"/Library/Frameworks/CydiaSubstrate.framework/CydiaSubstrate", @"@executable_path/Frameworks/CydiaSubstrate.framework/CydiaSubstrate"), @"Failed to changed /Library/Frameworks/CydiaSubstrate.framework/CydiaSubstrate to@executable_path/Frameworks/CydiaSubstrate.framework/CydiaSubstrate", true);
-
-        /*
-        NSTask *command = [[NSTask alloc] init];
-        command.launchPath = INSTALL_NAME_TOOL_PATH;
-        command.arguments = @[@"-change", @"/usr/lib/libsubstrate.dylib", @"@executable_path/Frameworks/CydiaSubstrate.framework/CydiaSubstrate", @([[NSString stringWithFormat:@"%@/%@", DylibFolder, dylibName] UTF8String])];
-        [command launch];
-        [command waitUntilExit];
         
-        command = [[NSTask alloc] init];
-        command.launchPath = INSTALL_NAME_TOOL_PATH;
-        command.arguments = @[@"-change", @"/Library/Frameworks/CydiaSubstrate.framework/CydiaSubstrate", @"@executable_path/Frameworks/CydiaSubstrate.framework/CydiaSubstrate", @([[NSString stringWithFormat:@"%@/%@", DylibFolder, dylibName] UTF8String])];
-        [command launch];
-        [command waitUntilExit];
-        */
-        
+        if (change_binary(dylibPath, @"/usr/lib/libsubstrate.dylib", libsubstrate) == IPAPATCHER_SUCCESS) {
+            cydiaSubstrate = true;
+            NSLog(@"Successfully changed  %@ to %@ for %@", @"/usr/lib/libsubstrate.dylib", libsubstrate, dylibName);
+        }
+
+        if (change_binary(dylibPath, @"/Library/Frameworks/CydiaSubstrate.framework/CydiaSubstrate", libsubstrate) == IPAPATCHER_SUCCESS) {
+            cydiaSubstrate = true;
+            NSLog(@"Successfully changed  %@ to %@ for %@", @"/Library/Frameworks/CydiaSubstrate.framework/CydiaSubstrate", libsubstrate, dylibName);
+        }
+   
         NSString *load_path = [NSString stringWithFormat:@"@executable_path/Dylibs/%@", dylibName];
-        NSString *msg = [NSString stringWithFormat:@"Failed to apply the %@ patch!", dylibName];
-        ASSERT(patch_binary(app_binary, load_path), msg, true);
+        if (patch_binary(app_binary, load_path, @"weak") == IPAPATCHER_SUCCESS) {
+            NSLog(@"注入成功：%@", load_path);
+        } else {
+            NSLog(@"注入失败：%@", load_path);
+        }
+    }
+
+    if (cydiaSubstrate) {
+        // Move files into their places
+        NSString *subpath1 = [NSString stringWithFormat:@"%@", [[NSBundle mainBundle] pathForResource:@"Dylib.bundle/libsubstrate" ofType:@"dylib"]];
+        ASSERT(cp(subpath1, DylibFolder), @"Failed to copy over libsubstrate.dylib", true);
+        // Patch the binary to load given frameworks/dylibs
+        int res = patch_binary(app_binary, @"@executable_path/Dylibs/libsubstrate.dylib", @"weak");
+        NSLog(@"注入%@：%@", res == IPAPATCHER_SUCCESS ? @"成功" : @"失败", libsubstrate);
     }
     
     printf("[*] Done\n");

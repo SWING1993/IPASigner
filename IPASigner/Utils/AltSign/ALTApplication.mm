@@ -52,6 +52,9 @@ ALTDeviceType ALTDeviceTypeFromUIDeviceFamily(NSInteger deviceFamily)
             return nil;
         }
         
+        NSString *executableName = infoDictionary[@"CFBundleExecutable"];
+        NSURL *executableFileURL = [fileURL URLByAppendingPathComponent:executableName];
+        
         NSString *name = infoDictionary[@"CFBundleDisplayName"] ?: infoDictionary[(NSString *)kCFBundleNameKey];
         NSString *bundleIdentifier = infoDictionary[(NSString *)kCFBundleIdentifierKey];
                 
@@ -127,6 +130,8 @@ ALTDeviceType ALTDeviceTypeFromUIDeviceFamily(NSInteger deviceFamily)
         _minimumiOSVersion = minimumVersion;
         _supportedDeviceTypes = supportedDeviceTypes;
         _iconName = [iconName copy];
+        _executableName = [executableName copy];
+        _executableFileURL = [executableFileURL copy];
     }
     
     return self;
@@ -211,18 +216,21 @@ ALTDeviceType ALTDeviceTypeFromUIDeviceFamily(NSInteger deviceFamily)
 }
 
 - (BOOL)encrypted {
-    bool encrypted = true;
-    char *macho_path = (char *)[[NSString stringWithFormat:@"%@/%@",self.fileURL.path, [[self.fileURL URLByDeletingPathExtension] lastPathComponent]] UTF8String];
+    bool encrypted = false;
+    NSLog(@"executableFileURL: %@",self.executableFileURL);
+    char *macho_path = (char *)[self.executableFileURL.path UTF8String];
     ZMachO macho;
     if (macho.Init(macho_path)) {
         for (size_t i = 0; i < macho.m_arrArchOes.size(); i++) {
             ZArchO *archo = macho.m_arrArchOes[i];
-            encrypted = archo->m_bEncrypted;
-            printf("encrypted: %d\n", encrypted);
+            if (archo->m_bEncrypted) {
+                encrypted = true;
+            }
         }
         macho.Free();
     }
     return encrypted;
 }
+
 
 @end

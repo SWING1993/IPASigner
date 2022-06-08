@@ -42,7 +42,7 @@
 		166DCB52283E0E12000C2D66 /* operations.m in Sources */ = {isa = PBXBuildFile; fileRef = 166DCB4F283E0E12000C2D66 /* operations.m */; };
 		166DCB53283E0E12000C2D66 /* headers.m in Sources */ = {isa = PBXBuildFile; fileRef = 166DCB50283E0E12000C2D66 /* headers.m */; };
 		16932F0B283797890030C319 /* SigningOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16932F0A283797890030C319 /* SigningOptions.swift */; };
-		16BD9CB0283E2F27003711EC /* Cydia.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 16BD9CAF283E2F27003711EC /* Cydia.bundle */; };
+		16BD9CB0283E2F27003711EC /* Dylib.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 16BD9CAF283E2F27003711EC /* Dylib.bundle */; };
 		28786D4F2848EE4500BB0CFC /* ClassDumpUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 28786D4D2848EE4500BB0CFC /* ClassDumpUtils.m */; };
 		28786DEE2848EE5800BB0CFC /* CDLCDataInCode.m in Sources */ = {isa = PBXBuildFile; fileRef = 28786D512848EE5800BB0CFC /* CDLCDataInCode.m */; };
 		28786DEF2848EE5800BB0CFC /* NSString-CDExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 28786D522848EE5800BB0CFC /* NSString-CDExtensions.m */; };
@@ -297,7 +297,7 @@
 		166DCB50283E0E12000C2D66 /* headers.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = headers.m; sourceTree = "<group>"; };
 		16932F0A283797890030C319 /* SigningOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SigningOptions.swift; sourceTree = "<group>"; };
 		16BD9CAE283E2DB3003711EC /* IPASigner.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; path = IPASigner.entitlements; sourceTree = "<group>"; };
-		16BD9CAF283E2F27003711EC /* Cydia.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Cydia.bundle; sourceTree = "<group>"; };
+		16BD9CAF283E2F27003711EC /* Dylib.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Dylib.bundle; sourceTree = "<group>"; };
 		28786D4D2848EE4500BB0CFC /* ClassDumpUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ClassDumpUtils.m; sourceTree = "<group>"; };
 		28786D4E2848EE4500BB0CFC /* ClassDumpUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ClassDumpUtils.h; sourceTree = "<group>"; };
 		28786D512848EE5800BB0CFC /* CDLCDataInCode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDLCDataInCode.m; sourceTree = "<group>"; };
@@ -509,7 +509,7 @@
 				165C9EEA2835E4D900AC6D35 /* IPASigner-Bridging-Header.h */,
 				165C9EE22835E1EF00AC6D35 /* Utils */,
 				165C9E412834AF6F00AC6D35 /* Assets.xcassets */,
-				16BD9CAF283E2F27003711EC /* Cydia.bundle */,
+				16BD9CAF283E2F27003711EC /* Dylib.bundle */,
 				165C9E432834AF6F00AC6D35 /* Preview Content */,
 			);
 			path = IPASigner;
@@ -1001,7 +1001,7 @@
 			files = (
 				165C9E452834AF6F00AC6D35 /* Preview Assets.xcassets in Resources */,
 				165C9E422834AF6F00AC6D35 /* Assets.xcassets in Resources */,
-				16BD9CB0283E2F27003711EC /* Cydia.bundle in Resources */,
+				16BD9CB0283E2F27003711EC /* Dylib.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
