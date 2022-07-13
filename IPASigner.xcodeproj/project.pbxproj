@@ -7,6 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		16534B1D287E8DA900DB6B66 /* AppNavigationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16534B1C287E8DA900DB6B66 /* AppNavigationView.swift */; };
+		16534B25287E9ACD00DB6B66 /* AppListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16534B24287E9ACD00DB6B66 /* AppListView.swift */; };
+		16534B27287E9BFA00DB6B66 /* NavigationRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16534B26287E9BFA00DB6B66 /* NavigationRow.swift */; };
+		16534B29287EAF2100DB6B66 /* CertListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16534B28287EAF2100DB6B66 /* CertListView.swift */; };
+		16534B2B287EAF4400DB6B66 /* SignedAppListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16534B2A287EAF4400DB6B66 /* SignedAppListView.swift */; };
+		16534B2D287EB0A600DB6B66 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16534B2C287EB0A600DB6B66 /* SettingsView.swift */; };
+		16534B35287EBE9C00DB6B66 /* YTKKeyValueStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 16534B31287EBE9C00DB6B66 /* YTKKeyValueStore.m */; };
 		165C9E3E2834AF6D00AC6D35 /* IPASignerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 165C9E3D2834AF6D00AC6D35 /* IPASignerApp.swift */; };
 		165C9E402834AF6D00AC6D35 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 165C9E3F2834AF6D00AC6D35 /* ContentView.swift */; };
 		165C9E422834AF6F00AC6D35 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 165C9E412834AF6F00AC6D35 /* Assets.xcassets */; };
@@ -125,6 +132,14 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		16534B1C287E8DA900DB6B66 /* AppNavigationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppNavigationView.swift; sourceTree = "<group>"; };
+		16534B24287E9ACD00DB6B66 /* AppListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppListView.swift; sourceTree = "<group>"; };
+		16534B26287E9BFA00DB6B66 /* NavigationRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationRow.swift; sourceTree = "<group>"; };
+		16534B28287EAF2100DB6B66 /* CertListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CertListView.swift; sourceTree = "<group>"; };
+		16534B2A287EAF4400DB6B66 /* SignedAppListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignedAppListView.swift; sourceTree = "<group>"; };
+		16534B2C287EB0A600DB6B66 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		16534B31287EBE9C00DB6B66 /* YTKKeyValueStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YTKKeyValueStore.m; sourceTree = "<group>"; };
+		16534B32287EBE9C00DB6B66 /* YTKKeyValueStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YTKKeyValueStore.h; sourceTree = "<group>"; };
 		165C9E3A2834AF6D00AC6D35 /* IPASigner.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = IPASigner.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		165C9E3D2834AF6D00AC6D35 /* IPASignerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IPASignerApp.swift; sourceTree = "<group>"; };
 		165C9E3F2834AF6D00AC6D35 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -482,6 +497,35 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		16534B1A287E8CB000DB6B66 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				16534B1C287E8DA900DB6B66 /* AppNavigationView.swift */,
+				16534B26287E9BFA00DB6B66 /* NavigationRow.swift */,
+				16534B24287E9ACD00DB6B66 /* AppListView.swift */,
+				16534B2A287EAF4400DB6B66 /* SignedAppListView.swift */,
+				16534B28287EAF2100DB6B66 /* CertListView.swift */,
+				16534B2C287EB0A600DB6B66 /* SettingsView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		16534B1B287E8CBE00DB6B66 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		16534B2E287EBE9C00DB6B66 /* YTKKeyValueStore */ = {
+			isa = PBXGroup;
+			children = (
+				16534B32287EBE9C00DB6B66 /* YTKKeyValueStore.h */,
+				16534B31287EBE9C00DB6B66 /* YTKKeyValueStore.m */,
+			);
+			path = YTKKeyValueStore;
+			sourceTree = "<group>";
+		};
 		165C9E312834AF6D00AC6D35 = {
 			isa = PBXGroup;
 			children = (
@@ -507,6 +551,8 @@
 				165C9E3D2834AF6D00AC6D35 /* IPASignerApp.swift */,
 				165C9E3F2834AF6D00AC6D35 /* ContentView.swift */,
 				165C9EEA2835E4D900AC6D35 /* IPASigner-Bridging-Header.h */,
+				16534B1B287E8CBE00DB6B66 /* Model */,
+				16534B1A287E8CB000DB6B66 /* Views */,
 				165C9EE22835E1EF00AC6D35 /* Utils */,
 				165C9E412834AF6F00AC6D35 /* Assets.xcassets */,
 				16BD9CAF283E2F27003711EC /* Dylib.bundle */,
@@ -704,6 +750,7 @@
 				166DCB46283E0E07000C2D66 /* patcher.m */,
 				28786D4E2848EE4500BB0CFC /* ClassDumpUtils.h */,
 				28786D4D2848EE4500BB0CFC /* ClassDumpUtils.m */,
+				16534B2E287EBE9C00DB6B66 /* YTKKeyValueStore */,
 				28786D502848EE5800BB0CFC /* class-dump */,
 				166DCB49283E0E12000C2D66 /* optool */,
 				165C9EEB2835EECC00AC6D35 /* zsign */,
@@ -1066,6 +1113,7 @@
 				165C9E512835D9E000AC6D35 /* StringByAppendingPathComponent.swift in Sources */,
 				28786DF62848EE5800BB0CFC /* CDLCSymbolTable.m in Sources */,
 				28786DF02848EE5800BB0CFC /* NSError-CDExtensions.m in Sources */,
+				16534B2D287EB0A600DB6B66 /* SettingsView.swift in Sources */,
 				28786E232848EE5800BB0CFC /* CDType.m in Sources */,
 				28786DF82848EE5800BB0CFC /* CDLoadCommand.m in Sources */,
 				28786E2C2848EE5800BB0CFC /* CDTypeFormatter.m in Sources */,
@@ -1079,17 +1127,20 @@
 				28786DF52848EE5800BB0CFC /* CDOCProtocol.m in Sources */,
 				28786E0C2848EE5800BB0CFC /* CDDataCursor.m in Sources */,
 				165C9E782835E09C00AC6D35 /* mztools.c in Sources */,
+				16534B25287E9ACD00DB6B66 /* AppListView.swift in Sources */,
 				28786E032848EE5800BB0CFC /* CDObjectiveCProcessor.m in Sources */,
 				28786E222848EE5800BB0CFC /* CDLCRoutines64.m in Sources */,
 				28786E0A2848EE5800BB0CFC /* CDOCInstanceVariable.m in Sources */,
 				28786E082848EE5800BB0CFC /* CDLCTwoLevelHints.m in Sources */,
 				165C9E692835E02D00AC6D35 /* NSError+ALTErrors.m in Sources */,
+				16534B1D287E8DA900DB6B66 /* AppNavigationView.swift in Sources */,
 				28786E372848EE5800BB0CFC /* CDFile.m in Sources */,
 				28786E202848EE5800BB0CFC /* CDFindMethodVisitor.m in Sources */,
 				165C9F0C2835EECC00AC6D35 /* archo.cpp in Sources */,
 				28786E312848EE5800BB0CFC /* CDLCUnixThread.m in Sources */,
 				28786E322848EE5800BB0CFC /* CDOCClassReference.m in Sources */,
 				165C9E642835E02D00AC6D35 /* ALTApplication.mm in Sources */,
+				16534B27287E9BFA00DB6B66 /* NavigationRow.swift in Sources */,
 				28786DEE2848EE5800BB0CFC /* CDLCDataInCode.m in Sources */,
 				28786DFB2848EE5800BB0CFC /* CDLCDylinker.m in Sources */,
 				166DCB52283E0E12000C2D66 /* operations.m in Sources */,
@@ -1106,6 +1157,7 @@
 				28786E1E2848EE5800BB0CFC /* CDLCSubFramework.m in Sources */,
 				28786E362848EE5800BB0CFC /* CDSection.m in Sources */,
 				28786DF22848EE5800BB0CFC /* CDMethodType.m in Sources */,
+				16534B29287EAF2100DB6B66 /* CertListView.swift in Sources */,
 				165C9E3E2834AF6D00AC6D35 /* IPASignerApp.swift in Sources */,
 				165C9F022835EECC00AC6D35 /* openssl.cpp in Sources */,
 				28786E242848EE5800BB0CFC /* CDStructureInfo.m in Sources */,
@@ -1134,10 +1186,12 @@
 				28786E382848EE5800BB0CFC /* CDLCDynamicSymbolTable.m in Sources */,
 				28786E2E2848EE5800BB0CFC /* CDMultiFileVisitor.m in Sources */,
 				28786DFF2848EE5800BB0CFC /* CDMachOFileDataCursor.m in Sources */,
+				16534B2B287EAF4400DB6B66 /* SignedAppListView.swift in Sources */,
 				28786D4F2848EE4500BB0CFC /* ClassDumpUtils.m in Sources */,
 				28786E152848EE5800BB0CFC /* blowfish.c in Sources */,
 				165C9E762835E09C00AC6D35 /* zip.c in Sources */,
 				28786E2D2848EE5800BB0CFC /* CDVisitor.m in Sources */,
+				16534B35287EBE9C00DB6B66 /* YTKKeyValueStore.m in Sources */,
 				28786E292848EE5800BB0CFC /* NSScanner-CDExtensions.m in Sources */,
 				28786E102848EE5800BB0CFC /* CDSearchPathState.m in Sources */,
 				28786E132848EE5800BB0CFC /* CDBalanceFormatter.m in Sources */,
@@ -1296,7 +1350,7 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"IPASigner/Preview Content\"";
-				DEVELOPMENT_TEAM = VTA4Y6H8RZ;
+				DEVELOPMENT_TEAM = WPXQYZSK2Q;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1337,7 +1391,7 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"IPASigner/Preview Content\"";
-				DEVELOPMENT_TEAM = VTA4Y6H8RZ;
+				DEVELOPMENT_TEAM = WPXQYZSK2Q;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				FRAMEWORK_SEARCH_PATHS = (

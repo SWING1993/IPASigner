@@ -11,8 +11,11 @@ import SwiftUI
 struct IPASignerApp: App {
     
     var body: some Scene {
+        
         WindowGroup {
-            ContentView()
+            AppNavigationView()
+                .frame(minWidth: 700, minHeight: 300)
+//            ContentView()
         }
     }
     

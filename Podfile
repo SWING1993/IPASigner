@@ -5,6 +5,7 @@ target 'IPASigner' do
 #  pod 'SSZipArchive'
   pod 'OpenSSL-Universal'
   pod 'STPrivilegedTask'
+  pod 'FMDB'
 end
 
 
