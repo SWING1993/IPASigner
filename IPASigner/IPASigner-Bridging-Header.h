@@ -8,7 +8,6 @@
 #ifndef IPASigner_Bridging_Header_h
 #define IPASigner_Bridging_Header_h
 
-
 #endif /* IPASigner_Bridging_Header_h */
 
 

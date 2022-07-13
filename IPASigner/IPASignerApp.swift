@@ -14,7 +14,7 @@ struct IPASignerApp: App {
         
         WindowGroup {
             AppNavigationView()
-                .frame(minWidth: 700, minHeight: 300)
+                .frame(minWidth: 900, minHeight: 600)
 //            ContentView()
         }
     }

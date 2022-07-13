@@ -23,7 +23,6 @@ struct AppListView: View {
                             .foregroundColor(.blue)
                     }
                 }
-      
             }
         
             
