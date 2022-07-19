@@ -15,6 +15,9 @@ struct IPASignerApp: App {
         WindowGroup {
             AppNavigationView()
                 .frame(minWidth: 900, minHeight: 600)
+                .onAppear {
+                    FileManager.default.createDefaultDirectory()
+                }
 //            ContentView()
         }
     }

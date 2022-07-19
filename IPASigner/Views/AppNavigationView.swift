@@ -45,7 +45,7 @@ struct AppNavigationView: View {
             .toolbar {
                 Spacer()
             }
-            Text("Select a Landmark")
+            AppListView()
         }
         //.focusedValue(\.selectedLandmark, $modelData.landmarks[index ?? 0])
     }

@@ -18,13 +18,18 @@ struct AppRow: View {
         HStack {
             icon
                 .resizable()
-                .frame(width: 50, height: 50)
-                .cornerRadius(10)
+                .frame(width: 55, height: 55)
+                .cornerRadius(8)
+                .overlay(
+                    RoundedRectangle(cornerRadius: 8, style: .continuous)
+                        .stroke(Color.init(.sRGB, red: 246/255, green: 246/255, blue: 246/255, opacity: 1), lineWidth: 1)
+                )
+     
             VStack(alignment: .leading) {
-                Text(name)
+                Text(" Name: \(name)")
                     .bold()
-                Text(bundleIdentifier)
-                Text(version)
+                Text(" Identifier: \(bundleIdentifier)")
+                Text(" Version: \(version)")
             }
 
             Spacer()
@@ -32,9 +37,3 @@ struct AppRow: View {
         .padding(.vertical, 7.5)
     }
 }
-
-//struct AppRow_Previews: PreviewProvider {
-//    static var previews: some View {
-//        AppRow.init(icon: <#T##Image#>, name: <#T##String#>, bundleIdentifier: <#T##String#>, version: <#T##String#>)
-//    }
-//}

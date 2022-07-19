@@ -17,32 +17,56 @@ struct AppListView: View {
     
     var body: some View {
 
-        List($appList) { $app in
-            AppRow(icon: Image.init(nsImage: app.icon), name: app.altApplication.name, bundleIdentifier: app.altApplication.bundleIdentifier, version: app.altApplication.version)
-        }.onAppear {
-            getDatas()
-        }.alert(isPresented: $showingAlert) {
-            Alert(title: Text(alertTitle),
-                  message: Text(alertMessage),
-                  dismissButton: .default(Text("OK")))
-        }
+        if self.appList.count <= 0 {
         
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
-            .navigationTitle("应用")
-            .toolbar{
-                ToolbarItem(placement:.automatic){
-                    Button(action:{
-                        print("导入IPA")
-                        doBrowse()
-                    }){
-                        Text("导入")
-                            .bold()
-                        Image(systemName: "tray.and.arrow.down.fill")
-                            .foregroundColor(.blue)
+            Text("点击右上角「导入」按钮导入IPA或APP")
+                .onAppear {
+                    getDatas()
+                }
+                .navigationTitle("应用")
+                    .toolbar{
+                        ToolbarItem(placement:.automatic){
+                            Button(action:{
+                                print("导入IPA")
+                                doBrowse()
+                            }){
+                                Text("导入")
+                                    .bold()
+                                Image(systemName: "tray.and.arrow.down.fill")
+                                    .foregroundColor(.blue)
+                            }
+                        }
+                    }
+        } else {
+            List($appList) { $app in
+                AppRow(icon: Image.init(nsImage: app.icon), name: app.altApplication.name, bundleIdentifier: app.altApplication.bundleIdentifier, version: app.altApplication.version)
+            }.alert(isPresented: $showingAlert) {
+                Alert(title: Text(alertTitle),
+                      message: Text(alertMessage),
+                      dismissButton: .default(Text("OK")))
+            }.navigationTitle("应用")
+                .toolbar{
+                    ToolbarItem(placement:.automatic){
+                        Button(action:{
+                            print("导入IPA")
+                            doBrowse()
+                        }){
+                            Text("导入")
+                                .bold()
+                            Image(systemName: "tray.and.arrow.down.fill")
+                                .foregroundColor(.blue)
+                        }
                     }
                 }
-            }
+        }
+       
+        
+        
+        
+
     }
+    
+ 
     
     func doBrowse() {
         let panel = NSOpenPanel()

@@ -9,7 +9,7 @@ import SwiftUI
 
 struct SignedAppListView: View {
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        Text("暂无数据")
             .navigationTitle("已签名")
     }
 }
