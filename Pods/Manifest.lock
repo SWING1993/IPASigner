@@ -2,25 +2,29 @@ PODS:
   - FMDB (2.7.5):
     - FMDB/standard (= 2.7.5)
   - FMDB/standard (2.7.5)
-  - OpenSSL-Universal (1.1.1500)
+  - HandyJSON (5.0.2)
+  - OpenSSL-Universal (1.1.1700)
   - STPrivilegedTask (1.0.1)
 
 DEPENDENCIES:
   - FMDB
+  - HandyJSON
   - OpenSSL-Universal
   - STPrivilegedTask
 
 SPEC REPOS:
   trunk:
     - FMDB
+    - HandyJSON
     - OpenSSL-Universal
     - STPrivilegedTask
 
 SPEC CHECKSUMS:
   FMDB: 2ce00b547f966261cd18927a3ddb07cb6f3db82a
-  OpenSSL-Universal: 5d1de8d199ea9684d7ee48a8caa38d5dbfee1981
+  HandyJSON: 9e4e236f5d2dbefad5155a77417bbea438201c03
+  OpenSSL-Universal: ee0a7a25f2042782e2df405e66db3e429198e392
   STPrivilegedTask: 103f97827454e786074640cf89d303be344498c7
 
-PODFILE CHECKSUM: d9593a503957a6b61b64ceaeb2946e10ff9accdf
+PODFILE CHECKSUM: b685c383828d2069036a2becef358bf2045139cb
 
 COCOAPODS: 1.11.3

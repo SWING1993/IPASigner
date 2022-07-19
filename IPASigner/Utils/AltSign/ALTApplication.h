@@ -27,6 +27,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, copy, readonly) NSString *executableName;
 @property (nonatomic, copy, readonly) NSURL *executableFileURL;
 
+@property (nonatomic, copy, nullable, readonly) NSString *iconName;
+
 #if TARGET_OS_IPHONE
 @property (nonatomic, readonly, nullable) UIImage *icon;
 #endif

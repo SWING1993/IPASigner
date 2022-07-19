@@ -23,7 +23,6 @@ ALTDeviceType ALTDeviceTypeFromUIDeviceFamily(NSInteger deviceFamily)
 
 @interface ALTApplication ()
 
-@property (nonatomic, copy, nullable, readonly) NSString *iconName;
 
 @end
 

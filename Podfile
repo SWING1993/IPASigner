@@ -6,6 +6,7 @@ target 'IPASigner' do
   pod 'OpenSSL-Universal'
   pod 'STPrivilegedTask'
   pod 'FMDB'
+  pod 'HandyJSON'
 end
 
 

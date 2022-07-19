@@ -17,6 +17,9 @@ RSYNC_PROTECT_TMP_FILES=(--filter "P .*.??????")
 variant_for_slice()
 {
   case "$1" in
+  "OpenSSL.xcframework/ios-arm64_x86_64-maccatalyst")
+    echo "maccatalyst"
+    ;;
   "OpenSSL.xcframework/macos-arm64_x86_64")
     echo ""
     ;;
@@ -26,15 +29,15 @@ variant_for_slice()
   "OpenSSL.xcframework/ios-arm64_i386_x86_64-simulator")
     echo "simulator"
     ;;
-  "OpenSSL.xcframework/ios-arm64_x86_64-maccatalyst")
-    echo "maccatalyst"
-    ;;
   esac
 }
 
 archs_for_slice()
 {
   case "$1" in
+  "OpenSSL.xcframework/ios-arm64_x86_64-maccatalyst")
+    echo "arm64 x86_64"
+    ;;
   "OpenSSL.xcframework/macos-arm64_x86_64")
     echo "arm64 x86_64"
     ;;
@@ -43,9 +46,6 @@ archs_for_slice()
     ;;
   "OpenSSL.xcframework/ios-arm64_i386_x86_64-simulator")
     echo "arm64 i386 x86_64"
-    ;;
-  "OpenSSL.xcframework/ios-arm64_x86_64-maccatalyst")
-    echo "arm64 x86_64"
     ;;
   esac
 }

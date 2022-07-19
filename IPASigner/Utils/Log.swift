@@ -30,3 +30,5 @@ class Log {
         NSLog(value)
     }
 }
+
+

@@ -75,7 +75,6 @@ struct ContentView: View {
                 }
                 .frame(width: 80, height: 30, alignment: .center)
                 .disabled(controlsDisable)
-                
             }.padding(.top, 20)
             
             HStack {

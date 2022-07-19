@@ -49,6 +49,9 @@
 		166DCB52283E0E12000C2D66 /* operations.m in Sources */ = {isa = PBXBuildFile; fileRef = 166DCB4F283E0E12000C2D66 /* operations.m */; };
 		166DCB53283E0E12000C2D66 /* headers.m in Sources */ = {isa = PBXBuildFile; fileRef = 166DCB50283E0E12000C2D66 /* headers.m */; };
 		16932F0B283797890030C319 /* SigningOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16932F0A283797890030C319 /* SigningOptions.swift */; };
+		16BC16E928864DE100DD7ECF /* FileManager+SharedDirectories.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16BC16E828864DE100DD7ECF /* FileManager+SharedDirectories.swift */; };
+		16BC16EB2886804100DD7ECF /* Client.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16BC16EA2886804100DD7ECF /* Client.swift */; };
+		16BC16ED2886891800DD7ECF /* AppRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16BC16EC2886891800DD7ECF /* AppRow.swift */; };
 		16BD9CB0283E2F27003711EC /* Dylib.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 16BD9CAF283E2F27003711EC /* Dylib.bundle */; };
 		28786D4F2848EE4500BB0CFC /* ClassDumpUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 28786D4D2848EE4500BB0CFC /* ClassDumpUtils.m */; };
 		28786DEE2848EE5800BB0CFC /* CDLCDataInCode.m in Sources */ = {isa = PBXBuildFile; fileRef = 28786D512848EE5800BB0CFC /* CDLCDataInCode.m */; };
@@ -311,6 +314,9 @@
 		166DCB4F283E0E12000C2D66 /* operations.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = operations.m; sourceTree = "<group>"; };
 		166DCB50283E0E12000C2D66 /* headers.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = headers.m; sourceTree = "<group>"; };
 		16932F0A283797890030C319 /* SigningOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SigningOptions.swift; sourceTree = "<group>"; };
+		16BC16E828864DE100DD7ECF /* FileManager+SharedDirectories.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "FileManager+SharedDirectories.swift"; sourceTree = "<group>"; };
+		16BC16EA2886804100DD7ECF /* Client.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Client.swift; sourceTree = "<group>"; };
+		16BC16EC2886891800DD7ECF /* AppRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppRow.swift; sourceTree = "<group>"; };
 		16BD9CAE283E2DB3003711EC /* IPASigner.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; path = IPASigner.entitlements; sourceTree = "<group>"; };
 		16BD9CAF283E2F27003711EC /* Dylib.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Dylib.bundle; sourceTree = "<group>"; };
 		28786D4D2848EE4500BB0CFC /* ClassDumpUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ClassDumpUtils.m; sourceTree = "<group>"; };
@@ -503,6 +509,7 @@
 				16534B1C287E8DA900DB6B66 /* AppNavigationView.swift */,
 				16534B26287E9BFA00DB6B66 /* NavigationRow.swift */,
 				16534B24287E9ACD00DB6B66 /* AppListView.swift */,
+				16BC16EC2886891800DD7ECF /* AppRow.swift */,
 				16534B2A287EAF4400DB6B66 /* SignedAppListView.swift */,
 				16534B28287EAF2100DB6B66 /* CertListView.swift */,
 				16534B2C287EB0A600DB6B66 /* SettingsView.swift */,
@@ -737,6 +744,8 @@
 		165C9EE22835E1EF00AC6D35 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				16BC16EA2886804100DD7ECF /* Client.swift */,
+				16BC16E828864DE100DD7ECF /* FileManager+SharedDirectories.swift */,
 				16932F0A283797890030C319 /* SigningOptions.swift */,
 				165C9E4C2835D31300AC6D35 /* NSTask-execute.swift */,
 				165C9F15283644AA00AC6D35 /* AppDefaults.swift */,
@@ -1139,6 +1148,7 @@
 				165C9F0C2835EECC00AC6D35 /* archo.cpp in Sources */,
 				28786E312848EE5800BB0CFC /* CDLCUnixThread.m in Sources */,
 				28786E322848EE5800BB0CFC /* CDOCClassReference.m in Sources */,
+				16BC16EB2886804100DD7ECF /* Client.swift in Sources */,
 				165C9E642835E02D00AC6D35 /* ALTApplication.mm in Sources */,
 				16534B27287E9BFA00DB6B66 /* NavigationRow.swift in Sources */,
 				28786DEE2848EE5800BB0CFC /* CDLCDataInCode.m in Sources */,
@@ -1162,6 +1172,7 @@
 				165C9F022835EECC00AC6D35 /* openssl.cpp in Sources */,
 				28786E242848EE5800BB0CFC /* CDStructureInfo.m in Sources */,
 				165C9E4F2835D8D800AC6D35 /* Log.swift in Sources */,
+				16BC16ED2886891800DD7ECF /* AppRow.swift in Sources */,
 				165C9E4D2835D31300AC6D35 /* NSTask-execute.swift in Sources */,
 				28786DFD2848EE5800BB0CFC /* CDLCRunPath.m in Sources */,
 				28786DFA2848EE5800BB0CFC /* CDLCRoutines32.m in Sources */,
@@ -1204,6 +1215,7 @@
 				28786E1D2848EE5800BB0CFC /* CDOCCategory.m in Sources */,
 				165C9F0A2835EECC00AC6D35 /* zsign.cpp in Sources */,
 				28786DF92848EE5800BB0CFC /* CDOCSymtab.m in Sources */,
+				16BC16E928864DE100DD7ECF /* FileManager+SharedDirectories.swift in Sources */,
 				28786E392848EE5800BB0CFC /* CDProtocolUniquer.m in Sources */,
 				28786DEF2848EE5800BB0CFC /* NSString-CDExtensions.m in Sources */,
 				165C9E682835E02D00AC6D35 /* NSFileManager+Zip.m in Sources */,
