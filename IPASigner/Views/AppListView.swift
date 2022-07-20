@@ -10,6 +10,7 @@ import SwiftUI
 struct AppListView: View {
     
     @State private var appList: [AppBundle] = []
+    @State private var selectedApp: AppBundle?
     
     @State private var showingAlert = false
     @State private var alertTitle: String = "提示"
@@ -18,10 +19,14 @@ struct AppListView: View {
     var body: some View {
 
         if self.appList.count <= 0 {
-        
             Text("点击右上角「导入」按钮导入IPA或APP")
                 .onAppear {
                     getDatas()
+                }
+                .alert(isPresented: $showingAlert) {
+                    Alert(title: Text(alertTitle),
+                          message: Text(alertMessage),
+                          dismissButton: .default(Text("OK")))
                 }
                 .navigationTitle("应用")
                     .toolbar{

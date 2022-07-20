@@ -32,3 +32,4 @@
 #import "patcher.h"
 #import "ClassDumpUtils.h"
 #import "YTKKeyValueStore.h"
+#import "ReadP12Subject.h"

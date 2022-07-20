@@ -18,11 +18,11 @@ BOOL folderExists(NSString *folder){
 }
 
 int mv(NSString *file, NSString *to){
-    NSTask *cp_task = [[NSTask alloc] init];
-    cp_task.launchPath = CP_PATH;
-    cp_task.arguments = @[file, to];
-    [cp_task launch];
-    [cp_task waitUntilExit];
+    NSTask *mv_task = [[NSTask alloc] init];
+    mv_task.launchPath = MV_PATH;
+    mv_task.arguments = @[file, to];
+    [mv_task launch];
+    [mv_task waitUntilExit];
     return IPAPATCHER_SUCCESS;
 }
 
