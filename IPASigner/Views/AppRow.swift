@@ -13,11 +13,6 @@ struct AppRow: View {
     var name: String
     var bundleIdentifier: String
     var version: String
-
-    @State var leftIndex = 0
-
-    let leftSource = (0..<10).map { $0%2 == 0 ? "🧜‍♀️\($0)":"🧚‍♀️\($0)" }
-
     
     var body: some View {
         HStack {
@@ -38,25 +33,12 @@ struct AppRow: View {
             }
 
             Spacer()
-            
-            //ellipsis
-            
-      
-            
-         
+
             Button("删除") {
              
             }
             .foregroundColor(.red)
-//
-//
-//            Button("签名") {
-//
-//            }
-//            .foregroundColor(.blue)
 
-            
-           
         }
         .padding(.vertical, 7.5)
     }
