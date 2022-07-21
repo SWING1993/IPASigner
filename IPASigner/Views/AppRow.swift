@@ -14,6 +14,8 @@ struct AppRow: View {
     var bundleIdentifier: String
     var version: String
     
+    var callBack: (() ->())?
+    
     var body: some View {
         HStack {
             icon
@@ -33,12 +35,43 @@ struct AppRow: View {
             }
 
             Spacer()
+            
+  
+            Button.init {
+                print("tapped button")
+                self.callBack?()
 
-            Button("删除") {
-             
+            } label: {
+                Text("导出")
+                    .foregroundColor(.blue)
+                Image(systemName: "square.and.arrow.up")
+                    .foregroundColor(.blue)
             }
-            .foregroundColor(.red)
+//            .buttonStyle(BorderlessButtonStyle())
+            
+            Button.init {
+                print("tapped button")
+                self.callBack?()
 
+            } label: {
+                Text("签名")
+                    .foregroundColor(.blue)
+                Image(systemName: "pencil.and.outline")
+                    .foregroundColor(.blue)
+            }
+//            .buttonStyle(BorderlessButtonStyle())
+
+            Button.init {
+                print("tapped button")
+                self.callBack?()
+
+            } label: {
+                Text("删除")
+                    .foregroundColor(.red)
+                Image(systemName: "trash")
+                    .foregroundColor(.red)
+            }
+//            .buttonStyle(BorderlessButtonStyle())
         }
         .padding(.vertical, 7.5)
     }

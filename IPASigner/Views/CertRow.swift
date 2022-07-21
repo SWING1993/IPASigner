@@ -40,8 +40,18 @@ struct CertRow: View {
                     }
                 }
                 
+               
                 if let altProfile = cert.altProfile {
-                    Text(" 描述文件：\(altProfile.name)")
+                    HStack {
+                        Text(" 描述文件：\(altProfile.name)")
+
+                        
+                        Image(systemName: "info.circle")
+                            .foregroundColor(.blue)
+                            .onTapGesture {
+                                print("tapped image")
+                            }
+                    }
 
                 } else {
                     Text(" 未导入描述文件")

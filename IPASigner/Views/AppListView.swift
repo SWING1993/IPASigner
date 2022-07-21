@@ -44,12 +44,17 @@ struct AppListView: View {
                     }
         } else {
             List($appList) { $app in
-                AppRow(icon: Image.init(nsImage: app.icon), name: app.altApplication.name, bundleIdentifier: app.altApplication.bundleIdentifier, version: app.altApplication.version)
-            }.alert(isPresented: $showingAlert) {
+                
+                AppRow(icon: Image.init(nsImage: app.icon), name: app.altApplication.name, bundleIdentifier: app.altApplication.bundleIdentifier, version: app.altApplication.version) {
+                    print("AppRow callback")
+                }  
+            }
+            .alert(isPresented: $showingAlert) {
                 Alert(title: Text(alertTitle),
                       message: Text(alertMessage),
                       dismissButton: .default(Text("OK")))
-            }.navigationTitle("应用")
+            }
+            .navigationTitle("应用")
                 .toolbar{
                     ToolbarItem(placement:.automatic){
                         Button(action:{
@@ -63,15 +68,10 @@ struct AppListView: View {
                         }
                     }
                 }
+                
         }
-       
-        
-        
-        
-
     }
-    
- 
+
     
     func doBrowse() {
         let panel = NSOpenPanel()

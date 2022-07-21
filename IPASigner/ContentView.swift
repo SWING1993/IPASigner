@@ -19,6 +19,9 @@ struct ContentView: View {
     @State private var alertMessage: String = ""
     @State private var stateString = ""
     
+    @State private var certList: [Cert] = []
+    @State private var selectedCertSerialNumber = ""
+    
     let fileManager = FileManager.default
     let bundleID = Bundle.main.bundleIdentifier
     let mktempPath = "/usr/bin/mktemp"
@@ -41,17 +44,6 @@ struct ContentView: View {
     
     var body: some View {
 
-        DispatchQueue.main.async {
-            if let p12Data = AppDefaults.shared.signingCertificate {
-                self.signingOptions.signingCert = ALTCertificate.init(p12Data: p12Data, password: AppDefaults.shared.signingCertificatePassword)
-                self.signingOptions.cert = self.signingOptions.signingCert == nil ? "" : self.signingOptions.signingCert!.name
-            }
-            if let profileData = AppDefaults.shared.signingProvisioningProfile {
-                self.signingOptions.signingProfile = ALTProvisioningProfile.init(data: profileData)
-                self.signingOptions.profile = self.signingOptions.signingProfile == nil ? "" : self.signingOptions.signingProfile!.name
-            }
-        }
-        
         return VStack(alignment: .leading, spacing: 5) {
             HStack {
                 Text("IPA File：")
@@ -85,14 +77,32 @@ struct ContentView: View {
                     .frame(width: 140, height: 25, alignment: .topTrailing)
                     .offset(x: 0, y: 5)
                 
-                TextField(
-                    "Import Certificate File",
-                    text: $signingOptions.cert
-                )
-                .allowsHitTesting(false)
-                .frame(width: 500, height: 30, alignment: .center)
+                Picker.init(selection: $selectedCertSerialNumber) {
+                    ForEach(certList) { cert in
+                        Text(cert.altCert.name).tag(cert.altCert.serialNumber)
+                    }
+                } label: {
+                    
+                }.frame(width: 500, height: 30, alignment: .center)
+                    .onChange(of: selectedCertSerialNumber) { certSerialNumber in
+                        
+                        print(certSerialNumber)
+                        self.certList.forEach { cert in
+                            if cert.altCert.serialNumber == certSerialNumber {
+                                signingOptions.signingCert = cert.altCert
+                                if let altProfile = cert.altProfile {
+                                    signingOptions.profile = altProfile.name
+                                    signingOptions.signingProfile = altProfile
+                                } else {
+                                    signingOptions.profile = ""
+                                    signingOptions.signingProfile = nil
+                                }
+                            }
+                        }
+                    }
                 
                 Button {
+                    print(selectedCertSerialNumber)
                     doBrowse(resourceType: .Cert)
                 } label: {
                     Text("Browse")
@@ -261,6 +271,8 @@ struct ContentView: View {
         .frame(width:750, height: 400, alignment: .top)
         .alert(isPresented: $showingAlert) {
             getAlert()
+        }.onAppear {
+            self.getCertsList()
         }
     }
     
@@ -268,6 +280,72 @@ struct ContentView: View {
         return Alert(title: Text(alertTitle),
                      message: Text(alertMessage),
                      dismissButton: .default(Text("OK")))
+    }
+    
+    func getCertsList() {
+        var certificates: [ALTCertificate] = []
+        do {
+            let array = try FileManager.default.contentsOfDirectory(atPath: FileManager.default.certificatesDirectory.path)
+            for name in array {
+                let fileURL: URL = FileManager.default.certificatesDirectory.appendingPathComponent(name)
+                if fileURL.isCertificate {
+                    if let data: Data = NSData.init(contentsOf: fileURL) as Data? {
+                        if let certificate = ALTCertificate.init(p12Data: data, password: "") {
+                            certificates.append(certificate)
+                        }
+                    }
+                }
+            }
+        } catch let error {
+            print(error.localizedDescription)
+        }
+        
+        var profiles: [ALTProvisioningProfile] = []
+        do {
+            let array = try FileManager.default.contentsOfDirectory(atPath: FileManager.default.profilesDirectory.path)
+            for name in array {
+                let fileURL: URL = FileManager.default.profilesDirectory.appendingPathComponent(name)
+                if fileURL.isMobileProvision {
+                    if let profile = ALTProvisioningProfile.init(url: fileURL) {
+                        profiles.append(profile)
+                    }
+                }
+            }
+        } catch let error {
+            print(error.localizedDescription)
+        }
+        
+        var certs: [Cert] = []
+        for certificate in certificates {
+            var item: (certificate: ALTCertificate, certInfo: P12CertificateInfo, profile: ALTProvisioningProfile?)
+            item.certificate = certificate
+            item.certInfo = ReadP12Subject().readCertInfoWhitAltCert(certificate)
+            item.profile = nil
+            for profile in profiles {
+                for profileCertificate in profile.certificates {
+                    if certificate.serialNumber == profileCertificate.serialNumber {
+                        if let p = item.profile {
+                            if p.expirationDate < profile.expirationDate {
+                                item.profile = profile
+                            }
+                        } else {
+                            item.profile = profile
+                        }
+                    }
+                }
+            }
+            let cert = Cert(item.certificate, altCertInfo: item.certInfo, altProfile: item.profile)
+            certs.append(cert)
+        }
+        if self.selectedCertSerialNumber.count <= 0 {
+            if let cert = certs.first {
+                self.selectedCertSerialNumber = cert.altCert.serialNumber
+            }
+        }
+        self.certList = certs
+        
+        print(certificates)
+        print(profiles)
     }
     
 }
