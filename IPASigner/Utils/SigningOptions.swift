@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct SigningOptions {
+class SigningOptions: ObservableObject {
     
     var ipaPath: String = ""
     var cert: String = ""

@@ -15,7 +15,6 @@
 		16534B2D287EB0A600DB6B66 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16534B2C287EB0A600DB6B66 /* SettingsView.swift */; };
 		16534B35287EBE9C00DB6B66 /* YTKKeyValueStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 16534B31287EBE9C00DB6B66 /* YTKKeyValueStore.m */; };
 		165C9E3E2834AF6D00AC6D35 /* IPASignerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 165C9E3D2834AF6D00AC6D35 /* IPASignerApp.swift */; };
-		165C9E402834AF6D00AC6D35 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 165C9E3F2834AF6D00AC6D35 /* ContentView.swift */; };
 		165C9E422834AF6F00AC6D35 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 165C9E412834AF6F00AC6D35 /* Assets.xcassets */; };
 		165C9E452834AF6F00AC6D35 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 165C9E442834AF6F00AC6D35 /* Preview Assets.xcassets */; };
 		165C9E4D2835D31300AC6D35 /* NSTask-execute.swift in Sources */ = {isa = PBXBuildFile; fileRef = 165C9E4C2835D31300AC6D35 /* NSTask-execute.swift */; };
@@ -48,6 +47,7 @@
 		166DCB51283E0E12000C2D66 /* NSData+Reading.m in Sources */ = {isa = PBXBuildFile; fileRef = 166DCB4E283E0E12000C2D66 /* NSData+Reading.m */; };
 		166DCB52283E0E12000C2D66 /* operations.m in Sources */ = {isa = PBXBuildFile; fileRef = 166DCB4F283E0E12000C2D66 /* operations.m */; };
 		166DCB53283E0E12000C2D66 /* headers.m in Sources */ = {isa = PBXBuildFile; fileRef = 166DCB50283E0E12000C2D66 /* headers.m */; };
+		1678204B288A3661002B6488 /* SignView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1678204A288A3661002B6488 /* SignView.swift */; };
 		16932F0B283797890030C319 /* SigningOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16932F0A283797890030C319 /* SigningOptions.swift */; };
 		16BC16E928864DE100DD7ECF /* FileManager+SharedDirectories.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16BC16E828864DE100DD7ECF /* FileManager+SharedDirectories.swift */; };
 		16BC16EB2886804100DD7ECF /* Client.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16BC16EA2886804100DD7ECF /* Client.swift */; };
@@ -149,7 +149,6 @@
 		16534B32287EBE9C00DB6B66 /* YTKKeyValueStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YTKKeyValueStore.h; sourceTree = "<group>"; };
 		165C9E3A2834AF6D00AC6D35 /* IPASigner.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = IPASigner.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		165C9E3D2834AF6D00AC6D35 /* IPASignerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IPASignerApp.swift; sourceTree = "<group>"; };
-		165C9E3F2834AF6D00AC6D35 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		165C9E412834AF6F00AC6D35 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		165C9E442834AF6F00AC6D35 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		165C9E4C2835D31300AC6D35 /* NSTask-execute.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSTask-execute.swift"; sourceTree = "<group>"; };
@@ -317,6 +316,8 @@
 		166DCB4E283E0E12000C2D66 /* NSData+Reading.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSData+Reading.m"; sourceTree = "<group>"; };
 		166DCB4F283E0E12000C2D66 /* operations.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = operations.m; sourceTree = "<group>"; };
 		166DCB50283E0E12000C2D66 /* headers.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = headers.m; sourceTree = "<group>"; };
+		1678204A288A3661002B6488 /* SignView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignView.swift; sourceTree = "<group>"; };
+		1678204C288A3ACC002B6488 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		16932F0A283797890030C319 /* SigningOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SigningOptions.swift; sourceTree = "<group>"; };
 		16BC16E828864DE100DD7ECF /* FileManager+SharedDirectories.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "FileManager+SharedDirectories.swift"; sourceTree = "<group>"; };
 		16BC16EA2886804100DD7ECF /* Client.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Client.swift; sourceTree = "<group>"; };
@@ -565,9 +566,10 @@
 		165C9E3C2834AF6D00AC6D35 /* IPASigner */ = {
 			isa = PBXGroup;
 			children = (
+				1678204C288A3ACC002B6488 /* Info.plist */,
 				16BD9CAE283E2DB3003711EC /* IPASigner.entitlements */,
 				165C9E3D2834AF6D00AC6D35 /* IPASignerApp.swift */,
-				165C9E3F2834AF6D00AC6D35 /* ContentView.swift */,
+				1678204A288A3661002B6488 /* SignView.swift */,
 				165C9EEA2835E4D900AC6D35 /* IPASigner-Bridging-Header.h */,
 				16534B1B287E8CBE00DB6B66 /* Model */,
 				16534B1A287E8CB000DB6B66 /* Views */,
@@ -1131,10 +1133,10 @@
 				28786E0B2848EE5800BB0CFC /* CDLCSubLibrary.m in Sources */,
 				165C9F122836047400AC6D35 /* AppSigner.mm in Sources */,
 				165C9F032835EECC00AC6D35 /* common.mm in Sources */,
-				165C9E402834AF6D00AC6D35 /* ContentView.swift in Sources */,
 				28786E1B2848EE5800BB0CFC /* NSArray-CDExtensions.m in Sources */,
 				16CCD3272887915900F61575 /* p12Checker.cpp in Sources */,
 				28786DF72848EE5800BB0CFC /* NSData-CDExtensions.m in Sources */,
+				1678204B288A3661002B6488 /* SignView.swift in Sources */,
 				28786E002848EE5800BB0CFC /* CDLCPrebindChecksum.m in Sources */,
 				28786E022848EE5800BB0CFC /* CDClassFrameworkVisitor.m in Sources */,
 				165C9E512835D9E000AC6D35 /* StringByAppendingPathComponent.swift in Sources */,
@@ -1390,6 +1392,7 @@
 					"$(PROJECT_DIR)/IPASigner",
 				);
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = IPASigner/Info.plist;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1431,6 +1434,7 @@
 					"$(PROJECT_DIR)/IPASigner",
 				);
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = IPASigner/Info.plist;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

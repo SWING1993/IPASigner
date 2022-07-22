@@ -1,18 +1,19 @@
 //
-//  ContentView.swift
+//  SignView.swift
 //  IPASigner
 //
-//  Created by SWING on 2522/5/18.
+//  Created by SWING on 2022/7/22.
 //
 
 import SwiftUI
 import Cocoa
 
-struct ContentView: View {
+struct SignView: View {
     
     @NSApplicationDelegateAdaptor(AppDelegate.self) var delegate
 
-    @State private var signingOptions: SigningOptions = SigningOptions()
+    @EnvironmentObject var signingOptions: SigningOptions
+    
     @State private var controlsDisable = false
     @State private var showingAlert = false
     @State private var alertTitle: String = "提示"
@@ -350,13 +351,13 @@ struct ContentView: View {
     
 }
 
-struct ContentView_Previews: PreviewProvider {
+struct SignView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView()
+        SignView()
     }
 }
 
-extension ContentView {
+extension SignView {
     
     func doBrowse(resourceType: ImportResourceType) {
         let panel = NSOpenPanel()
@@ -460,7 +461,7 @@ extension ContentView {
                             self.alertMessage = "请选择dylib文件"
                             self.showingAlert = true
                         }
-                    }                
+                    }
                 }
             }
         }

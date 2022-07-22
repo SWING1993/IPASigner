@@ -9,6 +9,8 @@ import SwiftUI
 
 struct AppListView: View {
     
+    @EnvironmentObject var signingOptions: SigningOptions
+
     @State private var appList: [AppBundle] = []
     @State private var selectedApp: AppBundle?
     
@@ -47,6 +49,16 @@ struct AppListView: View {
                 
                 AppRow(icon: Image.init(nsImage: app.icon), name: app.altApplication.name, bundleIdentifier: app.altApplication.bundleIdentifier, version: app.altApplication.version) {
                     print("AppRow callback")
+                    
+      
+                    signingOptions.ipaPath = app.altApplication.fileURL.path
+                    signingOptions.app = app.altApplication
+                    self.signingOptions.appVersion = app.altApplication.version
+                    self.signingOptions.appDisplayName = app.altApplication.name
+                    self.signingOptions.appBundleId = app.altApplication.bundleIdentifier
+                    self.signingOptions.appMinimumiOSVersion = app.altApplication.minimumiOSVersion.stringValue
+                    OpenWindows.SignWindow.open()
+              
                 }  
             }
             .alert(isPresented: $showingAlert) {
@@ -68,6 +80,7 @@ struct AppListView: View {
                         }
                     }
                 }
+                
                 
         }
     }
