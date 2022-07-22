@@ -9,23 +9,15 @@ import SwiftUI
 
 @main
 struct IPASignerApp: App {
-    
-    let signingOptions = SigningOptions()
-    
-    var body: some Scene {
         
+    var body: some Scene {
         WindowGroup("MainWindow") {
             AppNavigationView()
-                .environmentObject(signingOptions)
                 .frame(minWidth: 900, minHeight: 600)
                 .onAppear {
                     FileManager.default.createDefaultDirectory()
                 }
         }
-        
-        WindowGroup("SignWindow") {
-            SignView().environmentObject(signingOptions)
-        }.handlesExternalEvents(matching: Set(arrayLiteral: "SignWindow"))
     }
     
 }
@@ -41,14 +33,3 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
 }
 
-enum OpenWindows: String, CaseIterable {
-    case MainWindow = "MainWindow"
-    case SignWindow = "SignWindow"
-    //As many views as you need.
-
-    func open(){
-        if let url = URL(string: "myapp://(self.SignWindow)") { //replace myapp with your app's name
-            NSWorkspace.shared.open(url)
-        }
-    }
-}

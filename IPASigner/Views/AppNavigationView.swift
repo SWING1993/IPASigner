@@ -8,19 +8,16 @@
 import SwiftUI
 
 struct AppNavigationView: View {
-
-    @EnvironmentObject var signingOptions: SigningOptions
     
     @State var selection: Int?
     
     var body: some View {
         NavigationView {
             List {
-                NavigationLink(destination: AppListView().environmentObject(signingOptions), tag: 0, selection: self.$selection) {
+                NavigationLink(destination: AppListView(), tag: 0, selection: self.$selection) {
                     NavigationRow.init(title: "应用", image: Image(systemName: "shippingbox.circle.fill"))
                 }
-
-                          
+      
                 NavigationLink(destination: SignedAppListView(), tag: 1, selection: self.$selection) {
                     NavigationRow.init(title: "已签名", image: Image(systemName: "pencil.circle.fill"))
                 }

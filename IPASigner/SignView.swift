@@ -12,7 +12,7 @@ struct SignView: View {
     
     @NSApplicationDelegateAdaptor(AppDelegate.self) var delegate
 
-    @EnvironmentObject var signingOptions: SigningOptions
+    @State var signingOptions: SigningOptions
     
     @State private var controlsDisable = false
     @State private var showingAlert = false
@@ -348,13 +348,6 @@ struct SignView: View {
         print(certificates)
         print(profiles)
     }
-    
-}
-
-struct SignView_Previews: PreviewProvider {
-    static var previews: some View {
-        SignView()
-    }
 }
 
 extension SignView {
@@ -545,10 +538,9 @@ extension SignView {
     }
     
     func startSigning() {
-        if let app = self.signingOptions.app,
-           let cert = self.signingOptions.signingCert,
+        if let cert = self.signingOptions.signingCert,
            let profile = self.signingOptions.signingProfile {
-            if app.encrypted() {
+            if self.signingOptions.app.encrypted() {
                 self.alertMessage = "IPA未脱壳！"
                 self.showingAlert = true
                 if let tempFolder = self.lastMakedTempFolder {
@@ -557,7 +549,7 @@ extension SignView {
                 }
                 return
             }
-            let infoPlistURL = app.fileURL.appendingPathComponent("Info.plist")
+            let infoPlistURL = self.signingOptions.app.fileURL.appendingPathComponent("Info.plist")
             if let dictionary = NSMutableDictionary.init(contentsOf: infoPlistURL) {
                 print("Info.plist: \(dictionary)")
                 //MARK: Get output filename
@@ -569,39 +561,39 @@ extension SignView {
                         
                         self.controlsDisable = true
                         
-                        if self.signingOptions.appDisplayName != app.name {
-                            setStatus("修改\(app.name)的名字：\(self.signingOptions.appDisplayName)")
+                        if self.signingOptions.appDisplayName != self.signingOptions.app.name {
+                            setStatus("修改\(self.signingOptions.app.name)的名字：\(self.signingOptions.appDisplayName)")
                             let _ = setPlistKey(infoPlistURL.path, keyName: "CFBundleDisplayName", value: self.signingOptions.appDisplayName)
-                            setAppName(self.signingOptions.appDisplayName, fileURL: app.fileURL)
+                            setAppName(self.signingOptions.appDisplayName, fileURL: self.signingOptions.app.fileURL)
                         }
                         
-                        if self.signingOptions.appBundleId != app.bundleIdentifier {
-                            setStatus("修改\(app.name)的AppID：\(self.signingOptions.appBundleId)")
+                        if self.signingOptions.appBundleId != self.signingOptions.app.bundleIdentifier {
+                            setStatus("修改\(self.signingOptions.app.name)的AppID：\(self.signingOptions.appBundleId)")
                             let _ = setPlistKey(infoPlistURL.path, keyName: "CFBundleIdentifier", value: self.signingOptions.appBundleId)
                         }
                         
-                        if self.signingOptions.appVersion != app.version {
-                            setStatus("修改\(app.name)的版本：\(self.signingOptions.appVersion)")
+                        if self.signingOptions.appVersion != self.signingOptions.app.version {
+                            setStatus("修改\(self.signingOptions.app.name)的版本：\(self.signingOptions.appVersion)")
                             let _ = setPlistKey(infoPlistURL.path, keyName: "CFBundleShortVersionString", value: self.signingOptions.appVersion)
                         }
                         
                         if self.signingOptions.removeMinimumiOSVersion {
-                            setStatus("移除\(app.name)的最低系统版本限制")
+                            setStatus("移除\(self.signingOptions.app.name)的最低系统版本限制")
                             let _ = setPlistKey(infoPlistURL.path, keyName: "MinimumOSVersion", value: "1.0")
                         }
                         
                         var removeFilesURLs: [URL] = []
                         
                         if self.signingOptions.deleteWatch {
-                            let watchURL = app.fileURL.appendingPathComponent("Watch")
+                            let watchURL = self.signingOptions.app.fileURL.appendingPathComponent("Watch")
                             removeFilesURLs.append(watchURL)
                             
-                            let watchPlaceholderURL = app.fileURL.appendingPathComponent("com.apple.WatchPlaceholder")
+                            let watchPlaceholderURL = self.signingOptions.app.fileURL.appendingPathComponent("com.apple.WatchPlaceholder")
                             removeFilesURLs.append(watchPlaceholderURL)
                         }
                         
                         if self.signingOptions.deletePluglnsfolder {
-                            let plugInsURL = app.fileURL.appendingPathComponent("PlugIns")
+                            let plugInsURL = self.signingOptions.app.fileURL.appendingPathComponent("PlugIns")
                             removeFilesURLs.append(plugInsURL)
                         }
                         
@@ -623,13 +615,13 @@ extension SignView {
                                 fileManager.setFilePosixPermissions(URL.init(fileURLWithPath: dylibPath))
                                 dylibPaths.add(dylibPath)
                             }
-                            if patch_ipa(app.fileURL.path, dylibPaths) != 1 {
+                            if patch_ipa(self.signingOptions.app.fileURL.path, dylibPaths) != 1 {
                                 setStatus("插件注入失败")
                                 return
                             }
                         }
                    
-                        AppSigner().signApp(withAplication: app, certificate: cert, provisioningProfile: profile) { log in
+                        AppSigner().signApp(withAplication: self.signingOptions.app, certificate: cert, provisioningProfile: profile) { log in
                             self.setStatus(log)
                         } completionHandler: { success, error, ipaURL in
                             self.controlsDisable = false
@@ -668,10 +660,7 @@ extension SignView {
                 self.showingAlert = true
             }
         } else {
-            if self.signingOptions.app == nil {
-                self.alertMessage = "请导入IPA"
-                self.showingAlert = true
-            } else if self.signingOptions.signingCert == nil {
+            if self.signingOptions.signingCert == nil {
                 self.alertMessage = "请导入签名证书"
                 self.showingAlert = true
             } else if self.signingOptions.signingProfile == nil {
@@ -746,7 +735,6 @@ extension SignView {
         self.signingOptions.ipaPath = ""
         self.signingOptions.dylibs = ""
         self.signingOptions.dylibPaths = []
-        self.signingOptions.app = nil
         self.signingOptions.appDisplayName = ""
         self.signingOptions.appBundleId = ""
         self.signingOptions.appVersion = ""

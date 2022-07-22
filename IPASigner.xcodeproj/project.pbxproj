@@ -48,6 +48,7 @@
 		166DCB52283E0E12000C2D66 /* operations.m in Sources */ = {isa = PBXBuildFile; fileRef = 166DCB4F283E0E12000C2D66 /* operations.m */; };
 		166DCB53283E0E12000C2D66 /* headers.m in Sources */ = {isa = PBXBuildFile; fileRef = 166DCB50283E0E12000C2D66 /* headers.m */; };
 		1678204B288A3661002B6488 /* SignView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1678204A288A3661002B6488 /* SignView.swift */; };
+		1678204F288A6D2E002B6488 /* SwiftUIWindow in Frameworks */ = {isa = PBXBuildFile; productRef = 1678204E288A6D2E002B6488 /* SwiftUIWindow */; };
 		16932F0B283797890030C319 /* SigningOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16932F0A283797890030C319 /* SigningOptions.swift */; };
 		16BC16E928864DE100DD7ECF /* FileManager+SharedDirectories.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16BC16E828864DE100DD7ECF /* FileManager+SharedDirectories.swift */; };
 		16BC16EB2886804100DD7ECF /* Client.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16BC16EA2886804100DD7ECF /* Client.swift */; };
@@ -499,6 +500,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1678204F288A6D2E002B6488 /* SwiftUIWindow in Frameworks */,
 				88A68B8FEE043C9A70D56B03 /* Pods_IPASigner.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1028,6 +1030,7 @@
 			);
 			name = IPASigner;
 			packageProductDependencies = (
+				1678204E288A6D2E002B6488 /* SwiftUIWindow */,
 			);
 			productName = IPASigner;
 			productReference = 165C9E3A2834AF6D00AC6D35 /* IPASigner.app */;
@@ -1058,6 +1061,7 @@
 			);
 			mainGroup = 165C9E312834AF6D00AC6D35;
 			packageReferences = (
+				1678204D288A6D2E002B6488 /* XCRemoteSwiftPackageReference "SwiftUIWindow" */,
 			);
 			productRefGroup = 165C9E3B2834AF6D00AC6D35 /* Products */;
 			projectDirPath = "";
@@ -1478,6 +1482,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		1678204D288A6D2E002B6488 /* XCRemoteSwiftPackageReference "SwiftUIWindow" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/mortenjust/SwiftUIWindow.git";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		1678204E288A6D2E002B6488 /* SwiftUIWindow */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 1678204D288A6D2E002B6488 /* XCRemoteSwiftPackageReference "SwiftUIWindow" */;
+			productName = SwiftUIWindow;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 165C9E322834AF6D00AC6D35 /* Project object */;
 }

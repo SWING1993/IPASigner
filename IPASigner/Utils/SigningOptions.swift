@@ -7,7 +7,7 @@
 
 import Foundation
 
-class SigningOptions: ObservableObject {
+struct SigningOptions {
     
     var ipaPath: String = ""
     var cert: String = ""
@@ -22,8 +22,12 @@ class SigningOptions: ObservableObject {
     var deleteWatch = true
     var removeMinimumiOSVersion = false
 
-    var app: ALTApplication?
+    var app: ALTApplication
     var signingCert: ALTCertificate?
     var signingProfile: ALTProvisioningProfile?
+    
+    init(app: ALTApplication) {
+        self.app = app
+    }
     
 }

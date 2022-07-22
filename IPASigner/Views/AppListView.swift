@@ -6,11 +6,10 @@
 //
 
 import SwiftUI
+import SwiftUIWindow
 
 struct AppListView: View {
     
-    @EnvironmentObject var signingOptions: SigningOptions
-
     @State private var appList: [AppBundle] = []
     @State private var selectedApp: AppBundle?
     
@@ -49,17 +48,20 @@ struct AppListView: View {
                 
                 AppRow(icon: Image.init(nsImage: app.icon), name: app.altApplication.name, bundleIdentifier: app.altApplication.bundleIdentifier, version: app.altApplication.version) {
                     print("AppRow callback")
-                    
-      
+                    var signingOptions = SigningOptions(app: app.altApplication)
                     signingOptions.ipaPath = app.altApplication.fileURL.path
-                    signingOptions.app = app.altApplication
-                    self.signingOptions.appVersion = app.altApplication.version
-                    self.signingOptions.appDisplayName = app.altApplication.name
-                    self.signingOptions.appBundleId = app.altApplication.bundleIdentifier
-                    self.signingOptions.appMinimumiOSVersion = app.altApplication.minimumiOSVersion.stringValue
-                    OpenWindows.SignWindow.open()
-              
-                }  
+                    signingOptions.appVersion = app.altApplication.version
+                    signingOptions.appDisplayName = app.altApplication.name
+                    signingOptions.appBundleId = app.altApplication.bundleIdentifier
+                    signingOptions.appMinimumiOSVersion = app.altApplication.minimumiOSVersion.stringValue
+                    SwiftUIWindow.open { _ in
+                        
+                        SignView(signingOptions: signingOptions)
+                    }
+                    .clickable(true)
+                    .mouseMovesWindow(true)
+                    
+                }
             }
             .alert(isPresented: $showingAlert) {
                 Alert(title: Text(alertTitle),
