@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import SwiftUIWindow
 
 struct CertRow: View {
     
@@ -13,6 +14,8 @@ struct CertRow: View {
     
 
     var body: some View {
+        let expireDate = Date.init(timeIntervalSince1970: TimeInterval(cert.altCertInfo.expireTime))
+        let expireDateString = self.dateToString(expireDate)
         
         HStack {
             Image.init("cert")
@@ -22,37 +25,23 @@ struct CertRow: View {
             VStack(alignment: .leading) {
                 Text(" \(cert.altCertInfo.name)")
                     .bold()
-                let expireDate = Date.init(timeIntervalSince1970: TimeInterval(cert.altCertInfo.expireTime))
-                let expireDateString = self.dateToString(expireDate)
                 Text(" 过期时间：\(expireDateString)")
-                if expireDate < Date() {
-                    // 已过期
-
-                    Text(" 证书已过期")
-                        .foregroundColor(.red)
-                } else {
-                    if cert.altCertInfo.revoked {
-                        Text(" 证书已撤销")
-                            .foregroundColor(.red)
-                    } else {
-                        Text(" 证书有效")
-                            .foregroundColor(.green)
-                    }
-                }
-                
-               
                 if let altProfile = cert.altProfile {
                     HStack {
                         Text(" 描述文件：\(altProfile.name)")
-
-                        
                         Image(systemName: "info.circle")
                             .foregroundColor(.blue)
                             .onTapGesture {
-                                print("tapped image")
+                                
+                                SwiftUIWindow.open { _ in
+                                    ProfileInfoView(profile: altProfile)
+                                        .frame(minWidth: 500, maxWidth: .infinity, minHeight: 500, maxHeight: .infinity)
+
+                                }
+                                .clickable(true)
+                                .mouseMovesWindow(true)
                             }
                     }
-
                 } else {
                     Text(" 未导入描述文件")
                         .foregroundColor(.red)
@@ -66,8 +55,28 @@ struct CertRow: View {
             
             Spacer()
             
-            Image(systemName: "star.fill")
-                .foregroundColor(.yellow)
+
+
+            
+            if expireDate < Date() {
+                // 已过期
+                Text(" 证书已过期")
+                    .foregroundColor(.red)
+                Image(systemName: "xmark")
+                    .foregroundColor(.red)
+            } else {
+                if cert.altCertInfo.revoked {
+                    Text(" 证书已撤销")
+                        .foregroundColor(.red)
+                    Image(systemName: "xmark")
+                        .foregroundColor(.red)
+                } else {
+                    Text(" 证书有效")
+                        .foregroundColor(.green)
+                    Image(systemName: "checkmark")
+                        .foregroundColor(.green)
+                }
+            }
         }
         .padding(.vertical, 7.5)
         

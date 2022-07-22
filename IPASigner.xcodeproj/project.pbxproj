@@ -49,6 +49,7 @@
 		166DCB53283E0E12000C2D66 /* headers.m in Sources */ = {isa = PBXBuildFile; fileRef = 166DCB50283E0E12000C2D66 /* headers.m */; };
 		1678204B288A3661002B6488 /* SignView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1678204A288A3661002B6488 /* SignView.swift */; };
 		1678204F288A6D2E002B6488 /* SwiftUIWindow in Frameworks */ = {isa = PBXBuildFile; productRef = 1678204E288A6D2E002B6488 /* SwiftUIWindow */; };
+		16782051288A8C3C002B6488 /* ProfileInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16782050288A8C3C002B6488 /* ProfileInfoView.swift */; };
 		16932F0B283797890030C319 /* SigningOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16932F0A283797890030C319 /* SigningOptions.swift */; };
 		16BC16E928864DE100DD7ECF /* FileManager+SharedDirectories.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16BC16E828864DE100DD7ECF /* FileManager+SharedDirectories.swift */; };
 		16BC16EB2886804100DD7ECF /* Client.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16BC16EA2886804100DD7ECF /* Client.swift */; };
@@ -319,6 +320,7 @@
 		166DCB50283E0E12000C2D66 /* headers.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = headers.m; sourceTree = "<group>"; };
 		1678204A288A3661002B6488 /* SignView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignView.swift; sourceTree = "<group>"; };
 		1678204C288A3ACC002B6488 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		16782050288A8C3C002B6488 /* ProfileInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileInfoView.swift; sourceTree = "<group>"; };
 		16932F0A283797890030C319 /* SigningOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SigningOptions.swift; sourceTree = "<group>"; };
 		16BC16E828864DE100DD7ECF /* FileManager+SharedDirectories.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "FileManager+SharedDirectories.swift"; sourceTree = "<group>"; };
 		16BC16EA2886804100DD7ECF /* Client.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Client.swift; sourceTree = "<group>"; };
@@ -527,6 +529,7 @@
 				16534B28287EAF2100DB6B66 /* CertListView.swift */,
 				16CCD3282887952B00F61575 /* CertRow.swift */,
 				16534B2C287EB0A600DB6B66 /* SettingsView.swift */,
+				16782050288A8C3C002B6488 /* ProfileInfoView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -1186,6 +1189,7 @@
 				28786E0E2848EE5800BB0CFC /* CDLCUUID.m in Sources */,
 				28786E062848EE5800BB0CFC /* CDLCSubClient.m in Sources */,
 				28786E0D2848EE5800BB0CFC /* CDObjectiveC2Processor.m in Sources */,
+				16782051288A8C3C002B6488 /* ProfileInfoView.swift in Sources */,
 				28786E262848EE5800BB0CFC /* CDTopoSortNode.m in Sources */,
 				28786E142848EE5800BB0CFC /* CDSymbol.m in Sources */,
 				28786E1E2848EE5800BB0CFC /* CDLCSubFramework.m in Sources */,

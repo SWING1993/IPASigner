@@ -6,9 +6,11 @@
 //
 
 import SwiftUI
+import SwiftUIWindow
 
 struct AppRow: View {
     
+    var app: AppBundle
     var icon: Image
     var name: String
     var bundleIdentifier: String
@@ -37,22 +39,30 @@ struct AppRow: View {
             Spacer()
             
   
-            Button.init {
-                print("tapped button")
-                self.callBack?()
-
-            } label: {
-                Text("导出")
-                    .foregroundColor(.blue)
-                Image(systemName: "square.and.arrow.up")
-                    .foregroundColor(.blue)
-            }
+//            Button.init {
+//                print("tapped button")
+//                self.callBack?()
+//
+//            } label: {
+//                Text("导出")
+//                    .foregroundColor(.blue)
+//                Image(systemName: "square.and.arrow.up")
+//                    .foregroundColor(.blue)
+//            }
 //            .buttonStyle(BorderlessButtonStyle())
             
             Button.init {
-                print("tapped button")
-                self.callBack?()
-
+                var signingOptions = SigningOptions(app: app.altApplication)
+                signingOptions.ipaPath = app.altApplication.fileURL.path
+                signingOptions.appVersion = app.altApplication.version
+                signingOptions.appDisplayName = app.altApplication.name
+                signingOptions.appBundleId = app.altApplication.bundleIdentifier
+                signingOptions.appMinimumiOSVersion = app.altApplication.minimumiOSVersion.stringValue
+                SwiftUIWindow.open { _ in
+                    SignView(signingOptions: signingOptions)
+                }
+                .clickable(true)
+                .mouseMovesWindow(true)
             } label: {
                 Text("签名")
                     .foregroundColor(.blue)

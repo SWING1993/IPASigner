@@ -242,8 +242,7 @@ struct SignView: View {
                     Text("Remove Minimum Version")
                 }
                 .disabled(controlsDisable)
-                
-                
+ 
             }
             
             HStack {
@@ -336,7 +335,9 @@ struct SignView: View {
                 }
             }
             let cert = Cert(item.certificate, altCertInfo: item.certInfo, altProfile: item.profile)
-            certs.append(cert)
+            if item.profile != nil {
+                certs.append(cert)
+            }
         }
         if self.selectedCertSerialNumber.count <= 0 {
             if let cert = certs.first {
