@@ -763,8 +763,8 @@
 			isa = PBXGroup;
 			children = (
 				16CCD320288790EA00F61575 /* URL+Utilities.swift */,
-				16BC16EA2886804100DD7ECF /* Client.swift */,
 				16BC16E828864DE100DD7ECF /* FileManager+SharedDirectories.swift */,
+				16BC16EA2886804100DD7ECF /* Client.swift */,
 				16932F0A283797890030C319 /* SigningOptions.swift */,
 				165C9E4C2835D31300AC6D35 /* NSTask-execute.swift */,
 				165C9F15283644AA00AC6D35 /* AppDefaults.swift */,

@@ -46,36 +46,30 @@ struct SignView: View {
     var body: some View {
 
         return VStack(alignment: .leading, spacing: 5) {
+          
             HStack {
-                Text("IPA File：")
+                Text("App：")
                     .font(.body)
                     .foregroundColor(.black)
                     .multilineTextAlignment(.leading)
-                    .frame(width: 140, height: 25, alignment: .topTrailing)
+                    .frame(width: 110, height: 25, alignment: .topTrailing)
                     .offset(x: 0, y: 5)
-                
+
                 TextField(
-                    "Import IPA File",
+                    "应用",
                     text: $signingOptions.ipaPath
                 )
-                .frame(width: 500, height: 30, alignment: .center)
                 .allowsHitTesting(false)
-                        
-                Button {
-                    doBrowse(resourceType: .IPA)
-                } label: {
-                    Text("Browse")
-                }
-                .frame(width: 80, height: 30, alignment: .center)
-                .disabled(controlsDisable)
-            }.padding(.top, 20)
+                .frame(width: 500, height: 30, alignment: .center)
+            }
+            .padding(.top, 20)
             
             HStack {
-                Text("Signing Certificate：")
+                Text("选择证书：")
                     .font(.body)
                     .foregroundColor(.black)
                     .multilineTextAlignment(.center)
-                    .frame(width: 140, height: 25, alignment: .topTrailing)
+                    .frame(width: 110, height: 25, alignment: .topTrailing)
                     .offset(x: 0, y: 5)
                 
                 Picker.init(selection: $selectedCertSerialNumber) {
@@ -86,7 +80,6 @@ struct SignView: View {
                     
                 }.frame(width: 500, height: 30, alignment: .center)
                     .onChange(of: selectedCertSerialNumber) { certSerialNumber in
-                        
                         print(certSerialNumber)
                         self.certList.forEach { cert in
                             if cert.altCert.serialNumber == certSerialNumber {
@@ -101,60 +94,44 @@ struct SignView: View {
                             }
                         }
                     }
-                
-                Button {
-                    print(selectedCertSerialNumber)
-                    doBrowse(resourceType: .Cert)
-                } label: {
-                    Text("Browse")
-                }
-                .frame(width: 80, height: 30, alignment: .center)
-                .disabled(controlsDisable)
             }
             
             HStack {
-                Text("Provisioning Profile：")
+                Text("描述文件：")
                     .font(.body)
                     .foregroundColor(.black)
                     .multilineTextAlignment(.leading)
-                    .frame(width: 140, height: 25, alignment: .topTrailing)
+                    .frame(width: 110, height: 25, alignment: .topTrailing)
                     .offset(x: 0, y: 5)
                 
                 TextField(
                     "Import ProvisioningProfile File",
                     text: $signingOptions.profile
                 )
-                .frame(width: 500, height: 30, alignment: .center)
                 .allowsHitTesting(false)
-                
-                Button {
-                    doBrowse(resourceType: .Profile)
-                } label: {
-                    Text("Browse")
-                }
-                .frame(width: 80, height: 30, alignment: .center)
-                .disabled(controlsDisable)
+                .disabled(true)
+                .frame(width: 500, height: 30, alignment: .center)
             }
             
             HStack {
-                Text("Dylib Files：")
+                Text("注入插件：")
                     .font(.body)
                     .foregroundColor(.black)
                     .multilineTextAlignment(.leading)
-                    .frame(width: 140, height: 25, alignment: .topTrailing)
+                    .frame(width: 110, height: 25, alignment: .topTrailing)
                     .offset(x: 0, y: 5)
                 
                 TextField(
-                    "Import Dylib Files",
+                    "导入dylib或deb文件",
                     text: $signingOptions.dylibs
                 )
-                .frame(width: 500, height: 30, alignment: .center)
+                .frame(width: 420, height: 30, alignment: .center)
                 .allowsHitTesting(false)
                 
                 Button {
                     doBrowse(resourceType: .Dylib)
                 } label: {
-                    Text("Browse")
+                    Text("选择")
                 }
                 .frame(width: 80, height: 30, alignment: .center)
                 .disabled(controlsDisable)
@@ -162,11 +139,11 @@ struct SignView: View {
             }
             
             HStack {
-                Text("App Display Name：")
+                Text("应用名字：")
                     .font(.body)
                     .foregroundColor(.black)
                     .multilineTextAlignment(.center)
-                    .frame(width: 140, height: 25, alignment: .topTrailing)
+                    .frame(width: 110, height: 25, alignment: .topTrailing)
                     .offset(x: 0, y: 5)
                 
                 TextField(
@@ -179,11 +156,11 @@ struct SignView: View {
             }
             
             HStack {
-                Text("App Bundle ID：")
+                Text("应用标识符：")
                     .font(.body)
                     .foregroundColor(.black)
                     .multilineTextAlignment(.center)
-                    .frame(width: 140, height: 25, alignment: .topTrailing)
+                    .frame(width: 110, height: 25, alignment: .topTrailing)
                     .offset(x: 0, y: 5)
                 
                 TextField(
@@ -195,7 +172,7 @@ struct SignView: View {
                 
                 
                 Toggle(isOn: $signingOptions.deleteWatch) {
-                    Text("Delete Watch")
+                    Text("删除手表应用")
                 }
                 .disabled(controlsDisable)
                 
@@ -203,11 +180,11 @@ struct SignView: View {
             }
             
             HStack {
-                Text("App Version：")
+                Text("应用版本号：")
                     .font(.body)
                     .foregroundColor(.black)
                     .multilineTextAlignment(.center)
-                    .frame(width: 140, height: 25, alignment: .topTrailing)
+                    .frame(width: 110, height: 25, alignment: .topTrailing)
                     .offset(x: 0, y: 5)
                 
                 TextField(
@@ -218,17 +195,17 @@ struct SignView: View {
                 .disabled(controlsDisable)
 
                 Toggle(isOn: $signingOptions.deletePluglnsfolder) {
-                    Text("Delete Pluglns Folder")
+                    Text("删除插件应用")
                 }
                 .disabled(controlsDisable)
             }
             
             HStack {
-                Text("Minimum Version：")
+                Text("最低iOS版本：")
                     .font(.body)
                     .foregroundColor(.black)
                     .multilineTextAlignment(.center)
-                    .frame(width: 140, height: 25, alignment: .topTrailing)
+                    .frame(width: 110, height: 25, alignment: .topTrailing)
                     .offset(x: 0, y: 5)
                 
                 TextField(
@@ -239,18 +216,18 @@ struct SignView: View {
                 .frame(width: 400, height: 30, alignment: .center)
                 
                 Toggle(isOn: $signingOptions.removeMinimumiOSVersion) {
-                    Text("Remove Minimum Version")
+                    Text("移除iOS版本限制")
                 }
                 .disabled(controlsDisable)
  
             }
             
             HStack {
-                Text("Signing State：")
+                Text("签名：")
                     .font(.body)
                     .foregroundColor(.black)
                     .multilineTextAlignment(.center)
-                    .frame(width: 140, height: 25, alignment: .topTrailing)
+                    .frame(width: 110, height: 25, alignment: .topTrailing)
                     .offset(x: 0, y: 5)
                 
                 TextEditor(text: $stateString)
@@ -260,7 +237,7 @@ struct SignView: View {
                 Button {
                     startSigning()
                 } label: {
-                    Text("Start")
+                    Text("开始签名")
                 }
                 .foregroundColor(.blue)
                 .frame(width: 80, height: 30, alignment: .center)
@@ -268,7 +245,7 @@ struct SignView: View {
                 
             }
         }
-        .frame(width:750, height: 400, alignment: .top)
+        .frame(width:680, height: 400, alignment: .topLeading)
         .alert(isPresented: $showingAlert) {
             getAlert()
         }.onAppear {
@@ -362,143 +339,24 @@ extension SignView {
             if result.rawValue == NSApplication.ModalResponse.OK.rawValue {
                 if let url = panel.urls.first {
                     print("选择的File：\(url.absoluteString)")
-                    switch resourceType {
-                    case .Cert:
-                        if url.pathExtension.lowercased() == "p12" {
-                            if let data: Data = NSData.init(contentsOf: url) as Data? {
-                                let alert = NSAlert()
-                                alert.messageText = "请输入证书密码"
-                                alert.addButton(withTitle: "确定")
-                                alert.addButton(withTitle: "取消")
-                                let inputTextField = NSTextField(frame: NSRect(x: 0, y: 0, width: 300, height: 24))
-                                inputTextField.placeholderString = "证书密码"
-                                alert.accessoryView = inputTextField
-                                if let firstWindow = NSApplication.shared.windows.first {
-                                    alert.beginSheetModal(for: firstWindow) { returnCode in
-                                        if returnCode == .init(rawValue: 1000) {
-                                            if let inputCert = ALTCertificate.init(p12Data: data, password: inputTextField.stringValue) {
-                                                AppDefaults.shared.reset()
-                                                self.signingOptions.signingProfile = nil
-                                                self.signingOptions.signingCert = inputCert
-                                                self.signingOptions.cert = inputCert.name
-                                                self.signingOptions.profile = ""
-                                                AppDefaults.shared.signingCertificate = data
-                                                AppDefaults.shared.signingCertificatePassword = inputTextField.stringValue
-                                                AppDefaults.shared.signingCertificateName = inputCert.name
-                                                AppDefaults.shared.signingCertificateSerialNumber = inputCert.serialNumber
-                                            } else {
-                                                self.alertMessage = "证书无效或密码错误"
-                                                self.showingAlert = true
-                                            }
-                                        }
-                                    }
-                                }
-                            } else {
-                                self.alertMessage = "证书无效"
-                                self.showingAlert = true
-                            }
-                        } else {
-                            self.alertMessage = "请选择p12"
-                            self.showingAlert = true
-                        }
-                        
-                    case .Profile:
-                        if url.pathExtension.lowercased() == "mobileprovision" {
-                            if let cert = self.signingOptions.signingCert {
-                                if let inputProfile = ALTProvisioningProfile.init(url: url) {
-                                    var matched = false
-                                    for profileCertificate in inputProfile.certificates {
-                                        if cert.serialNumber == profileCertificate.serialNumber {
-                                            matched = true
-                                        }
-                                    }
-                                    if matched {
-                                        self.signingOptions.signingProfile = inputProfile
-                                        AppDefaults.shared.signingProvisioningProfile = inputProfile.data
-                                        self.signingOptions.profile = inputProfile.name
-                                    } else {
-                                        self.alertMessage = "所导入的mobileprovision和p12证书不匹配"
-                                        self.showingAlert = true
-                                    }
-                                } else {
-                                    self.alertMessage = "所导入的mobileprovision无效"
-                                    self.showingAlert = true
-                                }
-                            } else {
-                                self.alertMessage = "请先导入p12证书再导入mobileprovision"
-                                self.showingAlert = true
-                            }
-                            
-                        } else {
-                            self.alertMessage = "请选择mobileprovision"
-                            self.showingAlert = true
-                        }
-                    case .IPA:
-                        if url.pathExtension.lowercased() == "ipa" {
-                            self.signingOptions.ipaPath = url.path
-                            self.unzipIPA(url)
-                        } else if url.pathExtension.lowercased() == "app" {
-                            self.signingOptions.ipaPath = url.path
-                            self.importAppBundle(url)
-                        } else {
-                            self.alertMessage = "请选择ipa或者app文件"
-                            self.showingAlert = true
-                        }
-                       
-                    case .Dylib:
-                        if url.pathExtension.lowercased() == "dylib" {
-                            self.signingOptions.dylibPaths.append(url.path)
-                            self.signingOptions.dylibs = self.signingOptions.dylibs + url.lastPathComponent + "|"
-                        } else if url.pathExtension.lowercased() == "deb" {
-                            self.unzipDeb(url)
-                        } else {
-                            self.alertMessage = "请选择dylib文件"
-                            self.showingAlert = true
-                        }
+                    if url.pathExtension.lowercased() == "dylib" {
+                        self.signingOptions.dylibPaths.append(url.path)
+                        self.signingOptions.dylibs = self.signingOptions.dylibs + url.lastPathComponent + "|"
+                    } else if url.pathExtension.lowercased() == "deb" {
+                        self.unzipDeb(url)
+                    } else {
+                        self.alertMessage = "请选择dylib文件"
+                        self.showingAlert = true
                     }
                 }
             }
         }
     }
     
-    func unzipIPA(_ fileURL: URL) {
-        if lastMakedTempFolder == nil {
-            //MARK: Create working temp folder
-            var tempFolder: String! = nil
-            if let tmpFolder = makeTempFolder() {
-                tempFolder = tmpFolder
-            } else {
-                return
-            }
-            lastMakedTempFolder = tempFolder
-        }
-    
-        let workingDirectory = lastMakedTempFolder!.stringByAppendingPathComponent("out")
-        let payloadDirectory = workingDirectory.stringByAppendingPathComponent("Payload/")
-        
-        do {
-            let appBundleURL = try fileManager.unzipAppBundle(at: URL.init(fileURLWithPath: fileURL.path), toDirectory: URL.init(fileURLWithPath: payloadDirectory))
-            setStatus("Extracting ipa file: \(appBundleURL.path)")
-            importAppBundle(appBundleURL)
-        } catch {
-            setStatus("Error extracting ipa file")
-            cleanup(lastMakedTempFolder!); return
-        }
-    }
     
     func unzipDeb(_ fileURL: URL) {
-        if lastMakedTempFolder == nil {
-            //MARK: Create working temp folder
-            var tempFolder: String! = nil
-            if let tmpFolder = makeTempFolder() {
-                tempFolder = tmpFolder
-            } else {
-                return
-            }
-            lastMakedTempFolder = tempFolder
-        }
-        
-        let toURL = URL.init(fileURLWithPath: lastMakedTempFolder!).appendingPathComponent(fileURL.lastPathComponent)
+
+        let toURL = FileManager.default.tempDirectory.appendingPathComponent(fileURL.lastPathComponent)
         print("toURL:\(toURL.path)")
         do {
             if fileManager.fileExists(atPath: toURL.path) {
@@ -521,22 +379,7 @@ extension SignView {
         }
     }
     
-    func importAppBundle(_ fileURL: URL) {
-        if let application = ALTApplication.init(fileURL: fileURL) {
-            if application.encrypted() {
-                setStatus("IPA未脱壳！")
-            } else {
-                self.signingOptions.app = application
-                self.signingOptions.appVersion = application.version
-                self.signingOptions.appDisplayName = application.name
-                self.signingOptions.appBundleId = application.bundleIdentifier
-                self.signingOptions.appMinimumiOSVersion = application.minimumiOSVersion.stringValue
-                fileManager.setFilePosixPermissions(application.fileURL)
-            }
-        } else {
-            setStatus("Invalid File！")
-        }
-    }
+
     
     func startSigning() {
         if let cert = self.signingOptions.signingCert,
@@ -673,13 +516,7 @@ extension SignView {
     }
     
     
-    func makeTempFolder() -> String? {
-        let tempTask = Process().execute(mktempPath, workingDirectory: nil, arguments: ["-d", "-t", bundleID!])
-        if tempTask.status != 0 {
-            return nil
-        }
-        return tempTask.output.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
-    }
+
     
     func unzip(_ inputFile: String, outputPath: String) -> AppSignerTaskOutput {
         return Process().execute(unzipPath, workingDirectory: nil, arguments: ["-q", inputFile, "-d", outputPath])

@@ -13,14 +13,14 @@ class Log {
     static let bundleID = mainBundle.bundleIdentifier
     static let bundleName = mainBundle.infoDictionary!["CFBundleName"]
     static let bundleVersion = mainBundle.infoDictionary!["CFBundleShortVersionString"]
-    static let tempDirectory = NSTemporaryDirectory()
-    static var logName = Log.tempDirectory.stringByAppendingPathComponent("\(Log.bundleID!)-\(Date().timeIntervalSince1970).log")
+    static let logDirectory = FileManager.default.logDirectory
+    static var logName = Log.logDirectory.appendingPathComponent("\(Log.bundleID!)-\(Date().timeIntervalSince1970).log")
     
     @objc
     static func write(_ value: String) {
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
-        if let outputStream = OutputStream(toFileAtPath: logName, append: true) {
+        if let outputStream = OutputStream(toFileAtPath: logName.path, append: true) {
             outputStream.open()
             let text = "\(formatter.string(from: Date())) \(value)\n"
             let data = text.data(using: String.Encoding.utf8, allowLossyConversion: false)!

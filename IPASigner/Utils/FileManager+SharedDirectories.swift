@@ -23,6 +23,14 @@ public extension FileManager {
 //        return self.documentDirectory.appendingPathComponent("Dylibs", isDirectory: true)
 //    }
 
+    var logDirectory: URL {
+        return self.documentDirectory.appendingPathComponent("IPASigner/Log", isDirectory: true)
+    }
+    
+    var tempDirectory: URL {
+        return self.documentDirectory.appendingPathComponent("IPASigner/Temp", isDirectory: true)
+    }
+    
     var appsDirectory: URL {
         return self.documentDirectory.appendingPathComponent("IPASigner/Apps", isDirectory: true)
     }
@@ -45,7 +53,9 @@ public extension FileManager {
         let urls = [FileManager.default.appsDirectory,
                     FileManager.default.profilesDirectory,
                     FileManager.default.certificatesDirectory,
-                    FileManager.default.signedAppsDirectory]
+                    FileManager.default.signedAppsDirectory,
+                    FileManager.default.logDirectory,
+                    FileManager.default.tempDirectory]
         for url in urls {
             if !FileManager.default.fileExists(atPath: url.path) {
                 do {
