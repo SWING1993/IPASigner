@@ -53,6 +53,7 @@ struct AppRow: View {
             
             Button.init {
                 var signingOptions = SigningOptions(app: app.altApplication)
+                signingOptions.appName = app.altApplication.name
                 signingOptions.ipaPath = app.altApplication.fileURL.path
                 signingOptions.appVersion = app.altApplication.version
                 signingOptions.appDisplayName = app.altApplication.name

@@ -13,13 +13,11 @@ struct SignView: View {
     @NSApplicationDelegateAdaptor(AppDelegate.self) var delegate
 
     @State var signingOptions: SigningOptions
-    
     @State private var controlsDisable = false
     @State private var showingAlert = false
     @State private var alertTitle: String = "提示"
     @State private var alertMessage: String = ""
     @State private var stateString = ""
-    
     @State private var certList: [Cert] = []
     @State private var selectedCertSerialNumber = ""
     
@@ -34,8 +32,6 @@ struct SignView: View {
     let securityPath = "/usr/bin/security"
     let chmodPath = "/bin/chmod"
     
-    @State var lastMakedTempFolder: String?
-    
     enum ImportResourceType {
         case Cert
         case Profile
@@ -46,7 +42,6 @@ struct SignView: View {
     var body: some View {
 
         return VStack(alignment: .leading, spacing: 5) {
-          
             HStack {
                 Text("App：")
                     .font(.body)
@@ -57,10 +52,13 @@ struct SignView: View {
 
                 TextField(
                     "应用",
-                    text: $signingOptions.ipaPath
+                    text: $signingOptions.appName
                 )
                 .allowsHitTesting(false)
-                .frame(width: 500, height: 30, alignment: .center)
+                .disabled(true)
+                .background(Color.white)
+                .foregroundColor(.black)
+                Spacer()
             }
             .padding(.top, 20)
             
@@ -78,8 +76,7 @@ struct SignView: View {
                     }
                 } label: {
                     
-                }.frame(width: 500, height: 30, alignment: .center)
-                    .onChange(of: selectedCertSerialNumber) { certSerialNumber in
+                }.onChange(of: selectedCertSerialNumber) { certSerialNumber in
                         print(certSerialNumber)
                         self.certList.forEach { cert in
                             if cert.altCert.serialNumber == certSerialNumber {
@@ -94,6 +91,8 @@ struct SignView: View {
                             }
                         }
                     }
+                
+                Spacer()
             }
             
             HStack {
@@ -110,7 +109,10 @@ struct SignView: View {
                 )
                 .allowsHitTesting(false)
                 .disabled(true)
-                .frame(width: 500, height: 30, alignment: .center)
+                .background(Color.white)
+                .foregroundColor(.black)
+                
+                Spacer()
             }
             
             HStack {
@@ -122,11 +124,13 @@ struct SignView: View {
                     .offset(x: 0, y: 5)
                 
                 TextField(
-                    "导入dylib或deb文件",
+                    "导入dylib动态库文件",
                     text: $signingOptions.dylibs
                 )
-                .frame(width: 420, height: 30, alignment: .center)
                 .allowsHitTesting(false)
+                .disabled(true)
+                .background(Color.white)
+                .foregroundColor(.black)
                 
                 Button {
                     doBrowse(resourceType: .Dylib)
@@ -135,7 +139,7 @@ struct SignView: View {
                 }
                 .frame(width: 80, height: 30, alignment: .center)
                 .disabled(controlsDisable)
-                
+                Spacer()
             }
             
             HStack {
@@ -150,9 +154,9 @@ struct SignView: View {
                     "This changes the app title on the home screen",
                     text: $signingOptions.appDisplayName
                 )
-                .frame(width: 500, height: 30, alignment: .center)
                 .disabled(controlsDisable)
                 
+                Spacer()
             }
             
             HStack {
@@ -167,7 +171,6 @@ struct SignView: View {
                     "This changes the app bundle identifier",
                     text: $signingOptions.appBundleId
                 )
-                .frame(width: 400, height: 30, alignment: .center)
                 .disabled(controlsDisable)
                 
                 
@@ -176,7 +179,7 @@ struct SignView: View {
                 }
                 .disabled(controlsDisable)
                 
-                
+                Spacer()
             }
             
             HStack {
@@ -191,13 +194,18 @@ struct SignView: View {
                     "This changes the app version number",
                     text: $signingOptions.appVersion
                 )
-                .frame(width: 400, height: 30, alignment: .center)
                 .disabled(controlsDisable)
-
+                
                 Toggle(isOn: $signingOptions.deletePluglnsfolder) {
                     Text("删除插件应用")
                 }
                 .disabled(controlsDisable)
+
+                Spacer()
+//                Toggle(isOn: $signingOptions.removeMinimumiOSVersion) {
+//                    Text("删除系统版本限制")
+//                }
+//                .disabled(controlsDisable)
             }
             
             HStack {
@@ -212,45 +220,40 @@ struct SignView: View {
                     "This changes the app minimum iOS version",
                     text: $signingOptions.appMinimumiOSVersion
                 )
-                .allowsHitTesting(false)
-                .frame(width: 400, height: 30, alignment: .center)
-                
-                Toggle(isOn: $signingOptions.removeMinimumiOSVersion) {
-                    Text("移除iOS版本限制")
-                }
-                .disabled(controlsDisable)
- 
-            }
-            
-            HStack {
-                Text("签名：")
-                    .font(.body)
-                    .foregroundColor(.black)
-                    .multilineTextAlignment(.center)
-                    .frame(width: 110, height: 25, alignment: .topTrailing)
-                    .offset(x: 0, y: 5)
-                
-                TextEditor(text: $stateString)
-                    .frame(width: 500, height: 40)
-                    .allowsHitTesting(false)
                 
                 Button {
                     startSigning()
                 } label: {
                     Text("开始签名")
                 }
-                .foregroundColor(.blue)
                 .frame(width: 80, height: 30, alignment: .center)
                 .disabled(controlsDisable)
-                
+                Spacer()
             }
+            
+//            HStack {
+//                Text("签名：")
+//                    .font(.body)
+//                    .foregroundColor(.black)
+//                    .multilineTextAlignment(.center)
+//                    .frame(width: 110, height: 25, alignment: .topTrailing)
+//                    .offset(x: 0, y: 5)
+//
+//                TextEditor(text: $stateString)
+//                    .frame(width: 500, height: 40)
+//                    .allowsHitTesting(false)
+//
+//
+//
+//            }
         }
-        .frame(width:680, height: 400, alignment: .topLeading)
+        .frame(width:650, height: 290, alignment: .topLeading)
         .alert(isPresented: $showingAlert) {
             getAlert()
         }.onAppear {
             self.getCertsList()
         }
+        
     }
     
     func getAlert() -> Alert {
@@ -342,8 +345,6 @@ extension SignView {
                     if url.pathExtension.lowercased() == "dylib" {
                         self.signingOptions.dylibPaths.append(url.path)
                         self.signingOptions.dylibs = self.signingOptions.dylibs + url.lastPathComponent + "|"
-                    } else if url.pathExtension.lowercased() == "deb" {
-                        self.unzipDeb(url)
                     } else {
                         self.alertMessage = "请选择dylib文件"
                         self.showingAlert = true
@@ -352,45 +353,13 @@ extension SignView {
             }
         }
     }
-    
-    
-    func unzipDeb(_ fileURL: URL) {
 
-        let toURL = FileManager.default.tempDirectory.appendingPathComponent(fileURL.lastPathComponent)
-        print("toURL:\(toURL.path)")
-        do {
-            if fileManager.fileExists(atPath: toURL.path) {
-                try fileManager.removeItem(at: toURL)
-            }
-            try fileManager.copyItem(at: fileURL, to: toURL)
-            if let result = deb_test(lastMakedTempFolder!, toURL.path) {
-                if let dylibPathString = NSString.init(utf8String: result) {
-                    self.signingOptions.dylibPaths = dylibPathString.components(separatedBy: ",")
-                    var dylibNames = ""
-                    for dylibPath in self.signingOptions.dylibPaths {
-                        let dylibName = URL(fileURLWithPath: dylibPath).lastPathComponent
-                        dylibNames = dylibNames + " " + dylibName
-                    }
-                    self.signingOptions.dylibs = dylibNames
-                }
-            }
-        } catch let error {
-            setStatus(error.localizedDescription)
-        }
-    }
-    
-
-    
     func startSigning() {
         if let cert = self.signingOptions.signingCert,
            let profile = self.signingOptions.signingProfile {
             if self.signingOptions.app.encrypted() {
                 self.alertMessage = "IPA未脱壳！"
                 self.showingAlert = true
-                if let tempFolder = self.lastMakedTempFolder {
-                    cleanup(tempFolder)
-                    self.lastMakedTempFolder = nil
-                }
                 return
             }
             let infoPlistURL = self.signingOptions.app.fileURL.appendingPathComponent("Info.plist")
@@ -471,7 +440,6 @@ extension SignView {
                             self.controlsDisable = false
                             if success {
                                 if let ipaURL = ipaURL {
-                                    
                                     if fileManager.fileExists(atPath: outputFileURL.path) {
                                         do {
                                             try fileManager.removeItem(at: outputFileURL)
@@ -480,7 +448,6 @@ extension SignView {
                                             setStatus("删除失败：\(outputFileURL.path)\(error.localizedDescription)")
                                         }
                                     }
-                                    
                                     do {
                                         try fileManager.moveItem(at: ipaURL, to: outputFileURL)
                                         self.setStatus("签名成功，保存在\(outputFileURL.path)")
@@ -491,10 +458,6 @@ extension SignView {
                                 }
                             } else {
                                 self.setStatus("签名失败：\(error.debugDescription)")
-                            }
-                            if let tempFolder = self.lastMakedTempFolder {
-                                cleanup(tempFolder)
-                                self.lastMakedTempFolder = nil
                             }
                         }
                     }
@@ -511,12 +474,8 @@ extension SignView {
                 self.alertMessage = "请导入描述文件"
                 self.showingAlert = true
             }
-            
         }
     }
-    
-    
-
     
     func unzip(_ inputFile: String, outputPath: String) -> AppSignerTaskOutput {
         return Process().execute(unzipPath, workingDirectory: nil, arguments: ["-q", inputFile, "-d", outputPath])
@@ -569,7 +528,6 @@ extension SignView {
             setStatus("Unable to delete temp folder")
             Log.write(error.localizedDescription)
         }
-        
         self.signingOptions.ipaPath = ""
         self.signingOptions.dylibs = ""
         self.signingOptions.dylibPaths = []
@@ -585,3 +543,4 @@ extension SignView {
     }
     
 }
+

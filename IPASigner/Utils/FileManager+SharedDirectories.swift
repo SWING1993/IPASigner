@@ -18,11 +18,10 @@ public extension FileManager {
         return FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask)[0]
     }
 
-
-//    var dylibDirectory: URL {
-//        return self.documentDirectory.appendingPathComponent("Dylibs", isDirectory: true)
-//    }
-
+    var iconDirectory: URL {
+        return self.documentDirectory.appendingPathComponent("IPASigner/Icon", isDirectory: true)
+    }
+    
     var logDirectory: URL {
         return self.documentDirectory.appendingPathComponent("IPASigner/Log", isDirectory: true)
     }
@@ -44,7 +43,6 @@ public extension FileManager {
         return self.documentDirectory.appendingPathComponent("IPASigner/Certificates", isDirectory: true)
     }
     
-    
     var signedAppsDirectory: URL {
         return self.documentDirectory.appendingPathComponent("IPASigner/SignedApps", isDirectory: true)
     }
@@ -55,7 +53,8 @@ public extension FileManager {
                     FileManager.default.certificatesDirectory,
                     FileManager.default.signedAppsDirectory,
                     FileManager.default.logDirectory,
-                    FileManager.default.tempDirectory]
+                    FileManager.default.tempDirectory,
+                    FileManager.default.iconDirectory]
         for url in urls {
             if !FileManager.default.fileExists(atPath: url.path) {
                 do {
@@ -66,16 +65,6 @@ public extension FileManager {
             }
         }
     }
-    
-    func clearSignedAppData() {
-//        if FileManager.default.fileExists(atPath: FileManager.default.unzipIPADirectory.path) {
-//            do {
-//                print("清理ipa解压文件夹")
-//                try FileManager.default.removeItem(at: FileManager.default.unzipIPADirectory)
-//            } catch let error {
-//                print("清理ipa解压文件夹失败，\(error.localizedDescription)")
-//            }
-//        }
-    }
+
 }
 
