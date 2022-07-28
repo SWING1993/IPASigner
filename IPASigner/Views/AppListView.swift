@@ -44,8 +44,21 @@ struct AppListView: View {
                     }
         } else {
             List($appList) { $app in
-                AppRow(app: app, icon: Image.init(nsImage: app.icon), name: app.altApplication.name, bundleIdentifier: app.altApplication.bundleIdentifier, version: app.altApplication.version)
-
+                AppRow(app: app, icon: Image.init(nsImage: app.icon), name: app.altApplication.name, bundleIdentifier: app.altApplication.bundleIdentifier, version: app.altApplication.version) {
+                } removeAppCallBack: {
+                    let index = self.appList.firstIndex { a in
+                        return app.id == a.id
+                    }
+                    if let index = index {
+                        do {
+                            try FileManager.default.removeItem(at: app.altApplication.fileURL)
+                            self.appList.remove(at:index)
+                        } catch let error {
+                            self.alertMessage = "删除\(app.altApplication.name)失败，\(error.localizedDescription)"
+                            self.showingAlert = true
+                        }
+                    }
+                }
             }
             .alert(isPresented: $showingAlert) {
                 Alert(title: Text(alertTitle),

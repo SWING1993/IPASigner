@@ -17,6 +17,7 @@ struct AppRow: View {
     var version: String
     
     var callBack: (() ->())?
+    var removeAppCallBack: (() ->())?
     
     var body: some View {
         HStack {
@@ -60,7 +61,7 @@ struct AppRow: View {
 
             Button.init {
                 print("tapped button")
-                self.callBack?()
+                self.removeAppCallBack?()
 
             } label: {
                 Text("删除")
