@@ -45,6 +45,7 @@ struct AppListView: View {
         } else {
             List($appList) { $app in
                 AppRow(app: app, icon: Image.init(nsImage: app.icon), name: app.altApplication.name, bundleIdentifier: app.altApplication.bundleIdentifier, version: app.altApplication.version)
+
             }
             .alert(isPresented: $showingAlert) {
                 Alert(title: Text(alertTitle),

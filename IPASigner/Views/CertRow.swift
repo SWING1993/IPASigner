@@ -36,7 +36,6 @@ struct CertRow: View {
                                 SwiftUIWindow.open { _ in
                                     ProfileInfoView(profile: altProfile)
                                         .frame(minWidth: 500, maxWidth: .infinity, minHeight: 500, maxHeight: .infinity)
-
                                 }
                                 .clickable(true)
                                 .mouseMovesWindow(true)

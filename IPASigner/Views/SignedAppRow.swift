@@ -11,9 +11,6 @@ struct SignedAppRow: View {
     
     var ipa: SignedIPAModel
     var icon: Image
-    var name: String
-    var bundleIdentifier: String
-    var version: String
     
     var body: some View {
         HStack {
@@ -27,15 +24,32 @@ struct SignedAppRow: View {
                 )
      
             VStack(alignment: .leading) {
-                Text(" Name: \(name)")
+                Text(" Name: \(ipa.name)")
                     .bold()
-                Text(" Identifier: \(bundleIdentifier)")
-                Text(" Version: \(version)")
+                Text(" Identifier: \(ipa.bundleIdentifier)")
+                Text(" Version: \(ipa.version)")
             }
 
             Spacer()
             
+            Button.init {
+                print("tapped button")
+                
+            } label: {
+                Text("导出")
+                    .foregroundColor(.blue)
+                Image(systemName: "square.and.arrow.up")
+                    .foregroundColor(.blue)
+            }
     
+            Button.init {
+                print("tapped button")
+            } label: {
+                Text("删除")
+                    .foregroundColor(.red)
+                Image(systemName: "trash")
+                    .foregroundColor(.red)
+            }
         }
         .padding(.vertical, 7.5)
     }

@@ -30,27 +30,13 @@ struct AppRow: View {
                 )
      
             VStack(alignment: .leading) {
-                Text(" Name: \(name)")
+                Text(" \(name)")
                     .bold()
-                Text(" Identifier: \(bundleIdentifier)")
-                Text(" Version: \(version)")
+                Text(" 标识符: \(bundleIdentifier)")
+                Text(" 版本: \(version)")
             }
-
             Spacer()
-            
-  
-//            Button.init {
-//                print("tapped button")
-//                self.callBack?()
-//
-//            } label: {
-//                Text("导出")
-//                    .foregroundColor(.blue)
-//                Image(systemName: "square.and.arrow.up")
-//                    .foregroundColor(.blue)
-//            }
-//            .buttonStyle(BorderlessButtonStyle())
-            
+     
             Button.init {
                 var signingOptions = SigningOptions(app: app.altApplication)
                 signingOptions.appName = app.altApplication.name
@@ -82,8 +68,9 @@ struct AppRow: View {
                 Image(systemName: "trash")
                     .foregroundColor(.red)
             }
-//            .buttonStyle(BorderlessButtonStyle())
+
         }
         .padding(.vertical, 7.5)
+        
     }
 }

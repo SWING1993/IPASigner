@@ -12,11 +12,13 @@ import Swift
 class SignedIPAModel: HandyJSON, Identifiable {
     
     let id = UUID()
-    //var signedDate = Date().toString(.custom("yyyy-MM-dd HH:mm:ss"))
+    
     var ipaName = ""
+    var name = ""
     var iconName = ""
     var signedCertificateName = ""
-    var name = ""
+    var signedProfileName = ""
+    var signedDate = ""
     var bundleIdentifier = ""
     var version = ""
     var minimumiOSVersion = ""

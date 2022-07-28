@@ -32,7 +32,7 @@ struct SignedAppListView: View {
         } else {
             List($signedIPAList) { $ipa in
                 let icon = NSImage.init(contentsOf: FileManager.default.iconDirectory.appendingPathComponent(ipa.iconName))
-                SignedAppRow(ipa: ipa, icon: Image.init(nsImage: icon!), name: ipa.name, bundleIdentifier: ipa.bundleIdentifier, version: ipa.version)
+                SignedAppRow(ipa: ipa, icon: Image.init(nsImage: icon!))
             }
             .alert(isPresented: $showingAlert) {
                 Alert(title: Text(alertTitle),
