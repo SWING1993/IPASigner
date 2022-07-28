@@ -43,15 +43,15 @@ public extension FileManager {
         return self.documentDirectory.appendingPathComponent("IPASigner/Certificates", isDirectory: true)
     }
     
-    var signedAppsDirectory: URL {
-        return self.documentDirectory.appendingPathComponent("IPASigner/SignedApps", isDirectory: true)
+    var signedIPAsDirectory: URL {
+        return self.documentDirectory.appendingPathComponent("IPASigner/SignedIPAs", isDirectory: true)
     }
 
     func createDefaultDirectory() {
         let urls = [FileManager.default.appsDirectory,
                     FileManager.default.profilesDirectory,
                     FileManager.default.certificatesDirectory,
-                    FileManager.default.signedAppsDirectory,
+                    FileManager.default.signedIPAsDirectory,
                     FileManager.default.logDirectory,
                     FileManager.default.tempDirectory,
                     FileManager.default.iconDirectory]

@@ -55,6 +55,8 @@
 		16BC16EB2886804100DD7ECF /* Client.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16BC16EA2886804100DD7ECF /* Client.swift */; };
 		16BC16ED2886891800DD7ECF /* AppRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16BC16EC2886891800DD7ECF /* AppRow.swift */; };
 		16BD9CB0283E2F27003711EC /* Dylib.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 16BD9CAF283E2F27003711EC /* Dylib.bundle */; };
+		16C9473828927B1D003E7EE2 /* SignedAppRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16C9473728927B1D003E7EE2 /* SignedAppRow.swift */; };
+		16C9473A28927BF0003E7EE2 /* SignedIPAModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16C9473928927BF0003E7EE2 /* SignedIPAModel.swift */; };
 		16CCD321288790EA00F61575 /* URL+Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16CCD320288790EA00F61575 /* URL+Utilities.swift */; };
 		16CCD3242887914300F61575 /* ReadP12Subject.mm in Sources */ = {isa = PBXBuildFile; fileRef = 16CCD3222887914300F61575 /* ReadP12Subject.mm */; };
 		16CCD3272887915900F61575 /* p12Checker.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 16CCD3252887915900F61575 /* p12Checker.cpp */; };
@@ -327,6 +329,8 @@
 		16BC16EC2886891800DD7ECF /* AppRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppRow.swift; sourceTree = "<group>"; };
 		16BD9CAE283E2DB3003711EC /* IPASigner.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; path = IPASigner.entitlements; sourceTree = "<group>"; };
 		16BD9CAF283E2F27003711EC /* Dylib.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Dylib.bundle; sourceTree = "<group>"; };
+		16C9473728927B1D003E7EE2 /* SignedAppRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignedAppRow.swift; sourceTree = "<group>"; };
+		16C9473928927BF0003E7EE2 /* SignedIPAModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignedIPAModel.swift; sourceTree = "<group>"; };
 		16CCD320288790EA00F61575 /* URL+Utilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "URL+Utilities.swift"; sourceTree = "<group>"; };
 		16CCD3222887914300F61575 /* ReadP12Subject.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ReadP12Subject.mm; sourceTree = "<group>"; };
 		16CCD3232887914300F61575 /* ReadP12Subject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReadP12Subject.h; sourceTree = "<group>"; };
@@ -526,6 +530,7 @@
 				16534B24287E9ACD00DB6B66 /* AppListView.swift */,
 				16BC16EC2886891800DD7ECF /* AppRow.swift */,
 				16534B2A287EAF4400DB6B66 /* SignedAppListView.swift */,
+				16C9473728927B1D003E7EE2 /* SignedAppRow.swift */,
 				16534B28287EAF2100DB6B66 /* CertListView.swift */,
 				16CCD3282887952B00F61575 /* CertRow.swift */,
 				16534B2C287EB0A600DB6B66 /* SettingsView.swift */,
@@ -537,6 +542,7 @@
 		16534B1B287E8CBE00DB6B66 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				16C9473928927BF0003E7EE2 /* SignedIPAModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -1167,6 +1173,7 @@
 				28786E032848EE5800BB0CFC /* CDObjectiveCProcessor.m in Sources */,
 				28786E222848EE5800BB0CFC /* CDLCRoutines64.m in Sources */,
 				28786E0A2848EE5800BB0CFC /* CDOCInstanceVariable.m in Sources */,
+				16C9473828927B1D003E7EE2 /* SignedAppRow.swift in Sources */,
 				28786E082848EE5800BB0CFC /* CDLCTwoLevelHints.m in Sources */,
 				165C9E692835E02D00AC6D35 /* NSError+ALTErrors.m in Sources */,
 				16534B1D287E8DA900DB6B66 /* AppNavigationView.swift in Sources */,
@@ -1239,6 +1246,7 @@
 				28786E042848EE5800BB0CFC /* CDVisitorPropertyState.m in Sources */,
 				28786DF12848EE5800BB0CFC /* CDRelocationInfo.m in Sources */,
 				28786DF32848EE5800BB0CFC /* CDFatFile.m in Sources */,
+				16C9473A28927BF0003E7EE2 /* SignedIPAModel.swift in Sources */,
 				28786E092848EE5800BB0CFC /* CDLCVersionMinimum.m in Sources */,
 				28786DFC2848EE5800BB0CFC /* CDTypeLexer.m in Sources */,
 				28786E162848EE5800BB0CFC /* CDLCBuildVersion.m in Sources */,

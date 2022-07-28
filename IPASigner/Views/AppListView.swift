@@ -21,7 +21,7 @@ struct AppListView: View {
         if self.appList.count <= 0 {
             Text("点击右上角「导入」按钮导入IPA或APP")
                 .onAppear {
-                    getDatas()
+                    getDataSource()
                 }
                 .alert(isPresented: $showingAlert) {
                     Alert(title: Text(alertTitle),
@@ -64,9 +64,7 @@ struct AppListView: View {
                                 .foregroundColor(.blue)
                         }
                     }
-                }
-                
-                
+                }                
         }
     }
 
@@ -117,7 +115,7 @@ struct AppListView: View {
         }
     }
     
-    func getDatas() {
+    func getDataSource() {
         var appBundles: [AppBundle] = []
         if let results: [YTKKeyValueItem] = Client.shared.store?.getAllItems(fromTable: "AppsTable") as? [YTKKeyValueItem] {
             for item in results {

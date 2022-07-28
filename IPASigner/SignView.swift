@@ -41,7 +41,8 @@ struct SignView: View {
     
     var body: some View {
 
-        return VStack(alignment: .leading, spacing: 5) {
+        VStack(alignment: .leading, spacing: 5) {
+            
             HStack {
                 Text("App：")
                     .font(.body)
@@ -364,104 +365,107 @@ extension SignView {
             }
             let infoPlistURL = self.signingOptions.app.fileURL.appendingPathComponent("Info.plist")
             if let dictionary = NSMutableDictionary.init(contentsOf: infoPlistURL) {
-                print("Info.plist: \(dictionary)")
-                //MARK: Get output filename
-                let saveDialog = NSSavePanel()
-                saveDialog.allowedFileTypes = ["ipa"]
-                saveDialog.nameFieldStringValue = "\(signingOptions.appDisplayName)_\(signingOptions.appVersion)_\(signingOptions.appBundleId).ipa"
-                if saveDialog.runModal().rawValue == NSApplication.ModalResponse.OK.rawValue  {
-                    if let outputFileURL = saveDialog.url {
-                        
-                        self.controlsDisable = true
-                        
-                        if self.signingOptions.appDisplayName != self.signingOptions.app.name {
-                            setStatus("修改\(self.signingOptions.app.name)的名字：\(self.signingOptions.appDisplayName)")
-                            let _ = setPlistKey(infoPlistURL.path, keyName: "CFBundleDisplayName", value: self.signingOptions.appDisplayName)
-                            setAppName(self.signingOptions.appDisplayName, fileURL: self.signingOptions.app.fileURL)
-                        }
-                        
-                        if self.signingOptions.appBundleId != self.signingOptions.app.bundleIdentifier {
-                            setStatus("修改\(self.signingOptions.app.name)的AppID：\(self.signingOptions.appBundleId)")
-                            let _ = setPlistKey(infoPlistURL.path, keyName: "CFBundleIdentifier", value: self.signingOptions.appBundleId)
-                        }
-                        
-                        if self.signingOptions.appVersion != self.signingOptions.app.version {
-                            setStatus("修改\(self.signingOptions.app.name)的版本：\(self.signingOptions.appVersion)")
-                            let _ = setPlistKey(infoPlistURL.path, keyName: "CFBundleShortVersionString", value: self.signingOptions.appVersion)
-                        }
-                        
-                        if self.signingOptions.removeMinimumiOSVersion {
-                            setStatus("移除\(self.signingOptions.app.name)的最低系统版本限制")
-                            let _ = setPlistKey(infoPlistURL.path, keyName: "MinimumOSVersion", value: "1.0")
-                        }
-                        
-                        var removeFilesURLs: [URL] = []
-                        
-                        if self.signingOptions.deleteWatch {
-                            let watchURL = self.signingOptions.app.fileURL.appendingPathComponent("Watch")
-                            removeFilesURLs.append(watchURL)
-                            
-                            let watchPlaceholderURL = self.signingOptions.app.fileURL.appendingPathComponent("com.apple.WatchPlaceholder")
-                            removeFilesURLs.append(watchPlaceholderURL)
-                        }
-                        
-                        if self.signingOptions.deletePluglnsfolder {
-                            let plugInsURL = self.signingOptions.app.fileURL.appendingPathComponent("PlugIns")
-                            removeFilesURLs.append(plugInsURL)
-                        }
-                        
-                        for removeURL in removeFilesURLs {
-                            if fileManager.fileExists(atPath: removeURL.path) {
-                                do {
-                                    try fileManager.removeItem(at: removeURL)
-                                    setStatus("删除：\(removeURL.path)")
-                                } catch let error {
-                                    setStatus("删除失败：\(removeURL.path)\(error.localizedDescription)")
-                                }
-                            }
-                        }
-                        
-                        // 注入插件
-                        if self.signingOptions.dylibPaths.count > 0 {
-                            let dylibPaths = NSMutableArray.init(capacity: self.signingOptions.dylibPaths.count)
-                            for dylibPath in self.signingOptions.dylibPaths {
-                                fileManager.setFilePosixPermissions(URL.init(fileURLWithPath: dylibPath))
-                                dylibPaths.add(dylibPath)
-                            }
-                            if patch_ipa(self.signingOptions.app.fileURL.path, dylibPaths) != 1 {
-                                setStatus("插件注入失败")
-                                return
-                            }
-                        }
-                   
-                        AppSigner().signApp(withAplication: self.signingOptions.app, certificate: cert, provisioningProfile: profile) { log in
-                            self.setStatus(log)
-                        } completionHandler: { success, error, ipaURL in
-                            self.controlsDisable = false
-                            if success {
-                                if let ipaURL = ipaURL {
-                                    if fileManager.fileExists(atPath: outputFileURL.path) {
-                                        do {
-                                            try fileManager.removeItem(at: outputFileURL)
-                                            setStatus("删除：\(outputFileURL.path)")
-                                        } catch let error {
-                                            setStatus("删除失败：\(outputFileURL.path)\(error.localizedDescription)")
-                                        }
-                                    }
-                                    do {
-                                        try fileManager.moveItem(at: ipaURL, to: outputFileURL)
-                                        self.setStatus("签名成功，保存在\(outputFileURL.path)")
-                                    } catch let error {
-                                        print(error.localizedDescription)
-                                        self.setStatus("签名成功，保存失败，保存于\(ipaURL.path)")
-                                    }
-                                }
-                            } else {
-                                self.setStatus("签名失败：\(error.debugDescription)")
-                            }
+                print(dictionary)
+                self.controlsDisable = true
+                let outputFileURL = fileManager.signedIPAsDirectory.appendingPathComponent("\(signingOptions.appDisplayName)_\(signingOptions.appVersion)_\(signingOptions.appBundleId)_\(UInt.random(in: 1...100000)))).ipa")
+                
+                
+                if self.signingOptions.appDisplayName != self.signingOptions.app.name {
+                    setStatus("修改\(self.signingOptions.app.name)的名字：\(self.signingOptions.appDisplayName)")
+                    let _ = setPlistKey(infoPlistURL.path, keyName: "CFBundleDisplayName", value: self.signingOptions.appDisplayName)
+                    setAppName(self.signingOptions.appDisplayName, fileURL: self.signingOptions.app.fileURL)
+                }
+                
+                if self.signingOptions.appBundleId != self.signingOptions.app.bundleIdentifier {
+                    setStatus("修改\(self.signingOptions.app.name)的AppID：\(self.signingOptions.appBundleId)")
+                    let _ = setPlistKey(infoPlistURL.path, keyName: "CFBundleIdentifier", value: self.signingOptions.appBundleId)
+                }
+                
+                if self.signingOptions.appVersion != self.signingOptions.app.version {
+                    setStatus("修改\(self.signingOptions.app.name)的版本：\(self.signingOptions.appVersion)")
+                    let _ = setPlistKey(infoPlistURL.path, keyName: "CFBundleShortVersionString", value: self.signingOptions.appVersion)
+                }
+                
+                if self.signingOptions.removeMinimumiOSVersion {
+                    setStatus("移除\(self.signingOptions.app.name)的最低系统版本限制")
+                    let _ = setPlistKey(infoPlistURL.path, keyName: "MinimumOSVersion", value: "1.0")
+                }
+                
+                var removeFilesURLs: [URL] = []
+                
+                if self.signingOptions.deleteWatch {
+                    let watchURL = self.signingOptions.app.fileURL.appendingPathComponent("Watch")
+                    removeFilesURLs.append(watchURL)
+                    
+                    let watchPlaceholderURL = self.signingOptions.app.fileURL.appendingPathComponent("com.apple.WatchPlaceholder")
+                    removeFilesURLs.append(watchPlaceholderURL)
+                }
+                
+                if self.signingOptions.deletePluglnsfolder {
+                    let plugInsURL = self.signingOptions.app.fileURL.appendingPathComponent("PlugIns")
+                    removeFilesURLs.append(plugInsURL)
+                }
+                
+                for removeURL in removeFilesURLs {
+                    if fileManager.fileExists(atPath: removeURL.path) {
+                        do {
+                            try fileManager.removeItem(at: removeURL)
+                            setStatus("删除：\(removeURL.path)")
+                        } catch let error {
+                            setStatus("删除失败：\(removeURL.path)\(error.localizedDescription)")
                         }
                     }
                 }
+                
+                // 注入插件
+                if self.signingOptions.dylibPaths.count > 0 {
+                    let dylibPaths = NSMutableArray.init(capacity: self.signingOptions.dylibPaths.count)
+                    for dylibPath in self.signingOptions.dylibPaths {
+                        fileManager.setFilePosixPermissions(URL.init(fileURLWithPath: dylibPath))
+                        dylibPaths.add(dylibPath)
+                    }
+                    if patch_ipa(self.signingOptions.app.fileURL.path, dylibPaths) != 1 {
+                        setStatus("插件注入失败")
+                        return
+                    }
+                }
+           
+                AppSigner().signApp(withAplication: self.signingOptions.app, certificate: cert, provisioningProfile: profile) { log in
+                    self.setStatus(log)
+                } completionHandler: { success, error, ipaURL in
+                    self.controlsDisable = false
+                    if success {
+                        if let ipaURL = ipaURL {
+                            if fileManager.fileExists(atPath: outputFileURL.path) {
+                                do {
+                                    try fileManager.removeItem(at: outputFileURL)
+                                    setStatus("删除：\(outputFileURL.path)")
+                                } catch let error {
+                                    setStatus("删除失败：\(outputFileURL.path)\(error.localizedDescription)")
+                                }
+                            }
+                            do {
+                                try fileManager.moveItem(at: ipaURL, to: outputFileURL)
+                                self.setStatus("签名成功，保存在\(outputFileURL.path)")
+                                self.saveSignData(savedIPAURL: ipaURL)
+                            } catch let error {
+                                print(error.localizedDescription)
+                                self.setStatus("签名成功，保存失败，保存于\(ipaURL.path)")
+                            }
+                        }
+                    } else {
+                        self.setStatus("签名失败：\(error.debugDescription)")
+                    }
+                }
+            
+//                print("Info.plist: \(dictionary)")
+//                //MARK: Get output filename
+//                let saveDialog = NSSavePanel()
+//                saveDialog.allowedFileTypes = ["ipa"]
+//                saveDialog.nameFieldStringValue = "\(signingOptions.appDisplayName)_\(signingOptions.appVersion)_\(signingOptions.appBundleId).ipa"
+//                if saveDialog.runModal().rawValue == NSApplication.ModalResponse.OK.rawValue  {
+//                    if let outputFileURL = saveDialog.url
+//                }
             } else {
                 self.alertMessage = "无法读取Info.plist"
                 self.showingAlert = true
@@ -520,7 +524,7 @@ extension SignView {
         }
     }
     
-    func cleanup(_ tempFolder: String){
+    func cleanup(_ tempFolder: String) {
         do {
             Log.write("Deleting: \(tempFolder)")
             try fileManager.removeItem(atPath: tempFolder)
@@ -537,9 +541,42 @@ extension SignView {
         self.signingOptions.appMinimumiOSVersion = ""
     }
     
-    func setStatus(_ status: String){
+    func setStatus(_ status: String) {
         stateString = status
         Log.write(status)
+    }
+    
+    func saveSignData(savedIPAURL: URL) {
+        let signedIPA = SignedIPAModel()
+        signedIPA.name = self.signingOptions.appDisplayName
+        signedIPA.bundleIdentifier = self.signingOptions.appBundleId
+        signedIPA.version = self.signingOptions.appVersion
+        signedIPA.minimumiOSVersion = self.signingOptions.appMinimumiOSVersion
+        signedIPA.ipaName = savedIPAURL.lastPathComponent
+        if let signedCertificateName = self.signingOptions.signingCert?.name {
+            signedIPA.signedCertificateName = signedCertificateName
+        }
+        //signedIPA.log = log
+        if let iconName = self.signingOptions.app.iconName {
+            if let image = NSImage.init(contentsOfFile: self.signingOptions.app.fileURL.appendingPathComponent("\(iconName)@2x.png").path) {
+                let newIconName = signedIPA.name + "_v" + signedIPA.version + "_\(UInt.random(in: 1...100000))" + ".png"
+                let newIconURL = fileManager.iconDirectory.appendingPathComponent(newIconName)
+                do {
+                   try fileManager.copyItem(at: self.signingOptions.app.fileURL.appendingPathComponent("\(iconName)@2x.png"), to: newIconURL)
+                    signedIPA.iconName = newIconName
+                } catch let error {
+                    print(error.localizedDescription)
+                }
+            }
+        }
+       
+        if let jsonString = signedIPA.toJSONString() {
+            print("保存已签名应用的数据: \(jsonString)")
+            Client.shared.store?.createTable(withName: "signedIPAsTable")
+            Client.shared.store?.put(jsonString, withId: signedIPA.id.uuidString, intoTable: "signedIPAsTable")
+        } else {
+            print("保存已签名应用的数据失败")
+        }
     }
     
 }
