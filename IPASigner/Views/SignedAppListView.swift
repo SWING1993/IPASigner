@@ -31,8 +31,21 @@ struct SignedAppListView: View {
                 
         } else {
             List($signedIPAList) { $ipa in
-                let icon = NSImage.init(contentsOf: FileManager.default.iconDirectory.appendingPathComponent(ipa.iconName))
-                SignedAppRow(ipa: ipa, icon: Image.init(nsImage: icon!))
+                SignedAppRow(ipa: ipa) {
+                    let index = self.signedIPAList.firstIndex { i in
+                        return ipa.id == i.id
+                    }
+                    if let index = index {
+                        do {
+                            try FileManager.default.removeItem(at: URL(fileURLWithPath: ipa.filePath))
+                            self.signedIPAList.remove(at:index)
+                            Client.shared.store?.deleteObject(byId: ipa.id, fromTable: "signedIPAsTable")
+                        } catch let error {
+                            self.alertMessage = "删除\(ipa.name)失败，\(error.localizedDescription)"
+                            self.showingAlert = true
+                        }
+                    }
+                }
             }
             .alert(isPresented: $showingAlert) {
                 Alert(title: Text(alertTitle),

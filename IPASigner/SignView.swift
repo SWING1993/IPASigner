@@ -447,7 +447,7 @@ extension SignView {
                             do {
                                 try fileManager.moveItem(at: ipaURL, to: outputFileURL)
                                 self.setStatus("签名成功，保存在\(outputFileURL.path)")
-                                self.saveSignData(savedIPAURL: ipaURL)
+                                self.saveSignData(savedIPAURL: outputFileURL)
                             } catch let error {
                                 print(error.localizedDescription)
                                 self.setStatus("签名成功，保存失败，保存于\(ipaURL.path)")
@@ -548,11 +548,12 @@ extension SignView {
     
     func saveSignData(savedIPAURL: URL) {
         let signedIPA = SignedIPAModel()
+        signedIPA.id = signedIPA.uuid.uuidString
         signedIPA.name = self.signingOptions.appDisplayName
         signedIPA.bundleIdentifier = self.signingOptions.appBundleId
         signedIPA.version = self.signingOptions.appVersion
         signedIPA.minimumiOSVersion = self.signingOptions.appMinimumiOSVersion
-        signedIPA.ipaName = savedIPAURL.lastPathComponent
+        signedIPA.filePath = savedIPAURL.path
         if let signedCertificateName = self.signingOptions.signingCert?.name {
             signedIPA.signedCertificateName = signedCertificateName
         }
@@ -573,7 +574,7 @@ extension SignView {
         if let jsonString = signedIPA.toJSONString() {
             print("保存已签名应用的数据: \(jsonString)")
             Client.shared.store?.createTable(withName: "signedIPAsTable")
-            Client.shared.store?.put(jsonString, withId: signedIPA.id.uuidString, intoTable: "signedIPAsTable")
+            Client.shared.store?.put(jsonString, withId: signedIPA.id, intoTable: "signedIPAsTable")
         } else {
             print("保存已签名应用的数据失败")
         }

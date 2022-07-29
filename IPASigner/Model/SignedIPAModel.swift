@@ -11,9 +11,10 @@ import Swift
 
 class SignedIPAModel: HandyJSON, Identifiable {
     
-    let id = UUID()
+    let uuid = UUID()
     
-    var ipaName = ""
+    var id = ""
+    var filePath = ""
     var name = ""
     var iconName = ""
     var signedCertificateName = ""
