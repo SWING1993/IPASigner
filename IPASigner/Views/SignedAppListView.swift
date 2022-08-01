@@ -32,6 +32,7 @@ struct SignedAppListView: View {
         } else {
             List($signedIPAList) { $ipa in
                 SignedAppRow(ipa: ipa) {
+                    Client.shared.store?.deleteObject(byId: ipa.id, fromTable: "signedIPAsTable")
                     let index = self.signedIPAList.firstIndex { i in
                         return ipa.id == i.id
                     }
@@ -39,10 +40,10 @@ struct SignedAppListView: View {
                         do {
                             try FileManager.default.removeItem(at: URL(fileURLWithPath: ipa.filePath))
                             self.signedIPAList.remove(at:index)
-                            Client.shared.store?.deleteObject(byId: ipa.id, fromTable: "signedIPAsTable")
                         } catch let error {
-                            self.alertMessage = "删除\(ipa.name)失败，\(error.localizedDescription)"
-                            self.showingAlert = true
+                            print(error)
+                            //self.alertMessage = "删除\(ipa.name)失败，\(error.localizedDescription)"
+                            //self.showingAlert = true
                         }
                     }
                 }

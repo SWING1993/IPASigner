@@ -367,7 +367,7 @@ extension SignView {
             if let dictionary = NSMutableDictionary.init(contentsOf: infoPlistURL) {
                 print(dictionary)
                 self.controlsDisable = true
-                let outputFileURL = fileManager.signedIPAsDirectory.appendingPathComponent("\(signingOptions.appDisplayName)_\(signingOptions.appVersion)_\(signingOptions.appBundleId)_\(UInt.random(in: 1...100000)))).ipa")
+                let outputFileURL = fileManager.signedIPAsDirectory.appendingPathComponent("\(signingOptions.appDisplayName)_\(signingOptions.appVersion)_\(signingOptions.appBundleId)_\(UInt.random(in: 1...100000)).ipa")
                 
                 
                 if self.signingOptions.appDisplayName != self.signingOptions.app.name {
